@@ -1,14 +1,15 @@
 <template>
   <ion-toolbar color="primary" class="pt64">
-    <ion-buttons slot="start" class="pb16">
+    <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
+    <ion-title>Calcio a 5 - Poggio</ion-title>
     <ion-progress-bar type="indeterminate" v-if="store.httpRequestOnGoing" color="secondary"></ion-progress-bar>
   </ion-toolbar>
 </template>
 
 <script lang="ts" setup>
-import { IonToolbar, IonProgressBar, IonButtons, IonMenuButton } from "@ionic/vue";
+import { IonToolbar, IonProgressBar, IonButtons, IonMenuButton, IonTitle, IonBreadcrumb, IonBreadcrumbs} from "@ionic/vue";
 
 import { useStore } from "@/store/main";
 const store = useStore();

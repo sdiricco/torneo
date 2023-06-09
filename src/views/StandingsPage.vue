@@ -7,85 +7,101 @@
     </ion-header>
 
     <ion-content :fullscreen="true">
-      <div class="overflow-auto">
-        <table class="table table-sm mb-5">
-          <thead class="table-light sticky-top">
+      <div class="table-container">
+        <table class="table table-sm mb-4">
+          <thead class="table-light sticky-top" @click="onClickHead">
             <tr>
-              <th scope="col"></th>
-              <th scope="col">Squadra</th>
-              <th scope="col">PT</th>
-              <th scope="col">G</th>
-              <th scope="col">V</th>
-              <th scope="col">P</th>
-              <th scope="col">GF</th>
-              <th scope="col"></th>
+              <th></th>
+              <th>Squadra</th>
+              <th>PT</th>
+              <th>G</th>
+              <th>V</th>
+              <th>PA</th>
+              <th>PE</th>
+              <th>GF</th>
+              <th>GS</th>
+              <th>CD</th>
             </tr>
           </thead>
           <tbody>
-            <tr v-for="team in teams" :key="team.id" @click="onClickRow(team)">
-              <th scope="row">{{ team.id }}</th>
+            <tr v-for="(team, id) in teams" :key="id" @click="onClickRow(team)">
+              <th scope="row">{{ id }}</th>
               <td class="text-truncate" style="max-width: 150px">{{ team.name }}</td>
               <td>
                 <strong>{{ team.points }}</strong>
               </td>
-              <td>{{ team.matchPlayed }}</td>
-              <td>{{ team.matchWon }}</td>
-              <td>{{ team.matchLost }}</td>
-              <td>{{ team.goals }}</td>
-              <td>
-                <font-awesome-icon :icon="['fas', 'chevron-right']" />
-              </td>
-            </tr>
-          </tbody>
-        </table>
-
-        <table class="table table-sm table-borderless">
-          <tbody>
-            <tr v-for="l in legend" :key="l.id">
-              <th scope="row">{{ l.name }}</th>
-              <td>{{ l.description }}</td>
+              <td>{{ team.matches }}</td>
+              <td>{{ team.won_matches }}</td>
+              <td>{{ team.drawn_matches }}</td>
+              <td>{{ team.lost_matches }}</td>
+              <td>{{ team.goals_scored }}</td>
+              <td>{{ team.goals_conceded }}</td>
+              <td>{{ team.fair_play }}</td>
             </tr>
           </tbody>
         </table>
       </div>
+
+      <div class="container-fluid ps-2">
+        <div class="row g-1" v-for="l in legend" :key="l.id">
+          <div class="col-2">
+            <strong>{{ l.name }}</strong>
+          </div>
+          <div class="col">{{ l.description }}</div>
+        </div>
+      </div>
+      <Modal v-if="modal"></Modal>
+      
     </ion-content>
   </ion-page>
 </template>
 
 <script lang="ts" setup>
 import SearchToolbar from "@/components/SearchToolbar.vue";
-
+import Modal from "@/components/Modal.vue"
 /* IONIC COMPONENTS */
 import { IonContent, IonHeader, IonPage, IonFabButton, IonIcon } from "@ionic/vue";
 import { onMounted, ref } from "vue";
-import {getStandingsFromAICSWebPage} from "@/services/scraper"
-const teams = ref([
-  { id: 1, name: "Bombonera", points: 36, goals: 25, matchPlayed: 9, matchWon: 4, matchLost: 5 },
-  { id: 2, name: "Verciano", points: 12, goals: 30, matchPlayed: 10, matchWon: 1, matchLost: 9 },
-  { id: 3, name: "Atletico una volta", points: 11, goals: 28, matchPlayed: 9, matchWon: 1, matchLost: 8 },
-  { id: 4, name: "Belli fighi", points: 10, goals: 27, matchPlayed: 10, matchWon: 1, matchLost: 9 },
-  { id: 5, name: "Patetico madrid", points: 7, goals: 18, matchPlayed: 9, matchWon: 0, matchLost: 9 },
-  { id: 6, name: "Atletico ma non troppo", points: 7, goals: 14, matchPlayed: 10, matchWon: 0, matchLost: 10 },
-  { id: 7, name: "Tagetic", points: 7, goals: 12, matchPlayed: 9, matchWon: 0, matchLost: 9 },
-  { id: 8, name: "Neapolis", points: 6, goals: 9, matchPlayed: 10, matchWon: 0, matchLost: 10 },
-  { id: 9, name: "Rapid City", points: 5, goals: 15, matchPlayed: 9, matchWon: 0, matchLost: 9 },
-  { id: 10, name: "FC Splendido", points: 4, goals: 11, matchPlayed: 10, matchWon: 0, matchLost: 10 },
-]);
+import { getStandingsFromAICSWebPage } from "@/services/scraper";
+import { useStore } from "@/store/main";
+
+let teams = ref<any>([]);
+
+let modal = ref(false)
 
 const legend = ref([
   { id: 1, name: "PT", description: "Punti totali" },
   { id: 2, name: "G", description: "Partite giocate" },
   { id: 3, name: "V", description: "Partite vinte" },
-  { id: 4, name: "P", description: "Partite perse" },
-  { id: 4, name: "GF", description: "Gol fatti" },
+  { id: 4, name: "PA", description: "Partite pareggiate" },
+  { id: 5, name: "PE", description: "Partite perse" },
+  { id: 6, name: "GF", description: "Gol fatti" },
+  { id: 7, name: "GS", description: "Gol subiti" },
+  { id: 8, name: "CD", description: "Coppa Disciplina" },
 ]);
 
 function onClickRow(team: any) {
   console.log("team", team);
 }
 
-onMounted(async() => {
-  const response = await getStandingsFromAICSWebPage()
-  console.log('response', response.data) 
-})
+function onClickHead(){
+  modal.value = !modal.value;
+  console.log('modal.value', modal.value);
+
+}
+
+onMounted(async () => {
+  useStore().httpRequestOnGoing = true;
+  const response = await getStandingsFromAICSWebPage();
+  teams.value = response.data.data;
+  useStore().httpRequestOnGoing = false;
+
+});
 </script>
+
+<style scoped>
+.table-container {
+  height: 50vh;
+  overflow: auto;
+}
+</style>
