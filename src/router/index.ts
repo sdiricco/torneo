@@ -4,15 +4,27 @@ import { RouteRecordRaw } from 'vue-router';
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
-    redirect: '/home'
+    redirect: '/standings'
   },
   {
-    path: '/home',
-    name: 'Home',
-    component: () => import('@/views/HomePage.vue'),
+    path: '/standings',
+    name: 'StandingsPage',
+    component: () => import('@/views/StandingsPage.vue'),
+  },
+  {
+    path: '/matches',
+    name: 'MatchesPage',
+    component: () => import('@/views/MatchesPage.vue'),
+  },
+  {
+    path: '/players',
+    name: 'PlayersPage',
+    component: () => import('@/views/PlayersPage.vue'),
   }
 ]
 
+
+//standings
 const router = createRouter({
   history: createWebHashHistory(),
   routes
