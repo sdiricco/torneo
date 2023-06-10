@@ -7,58 +7,36 @@
     </ion-header>
 
     <ion-content :fullscreen="true">
-      <div class="table-container">
-        <table class="table table-sm mb-4">
-          <thead class="table-light sticky-top" @click="onClickHead">
-            <tr>
-              <th></th>
-              <th>Squadra</th>
-              <th>PT</th>
-              <th>G</th>
-              <th>V</th>
-              <th>PA</th>
-              <th>PE</th>
-              <th>GF</th>
-              <th>GS</th>
-              <th>CD</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="(team, id) in teams" :key="id" @click="onClickRow(team)">
-              <th scope="row">{{ id }}</th>
-              <td class="text-truncate" style="max-width: 150px">{{ team.name }}</td>
-              <td>
-                <strong>{{ team.points }}</strong>
-              </td>
-              <td>{{ team.matches }}</td>
-              <td>{{ team.won_matches }}</td>
-              <td>{{ team.drawn_matches }}</td>
-              <td>{{ team.lost_matches }}</td>
-              <td>{{ team.goals_scored }}</td>
-              <td>{{ team.goals_conceded }}</td>
-              <td>{{ team.fair_play }}</td>
-            </tr>
-          </tbody>
-        </table>
+      <div class="card">
+        <DataTable
+        scrollable 
+        scrollHeight="flex"
+        :class="`p-datatable-sm custom-table`"
+        :value="teams"
+        dataKey="name"
+        stripedRows>
+        <Column frozen>
+          <template #body="{ index }">
+            {{ index }}
+          </template>
+        </Column>
+        <Column field="name" frozen sortable header="Name" style="width: 180px; max-width: 180px;" class="white-space-nowrap overflow-x-hidden text-overflow-ellipsis" ></Column>
+        <Column field="points" sortable header="PT" class="font-bold"></Column>
+        <Column field="matches" sortable header="G"></Column>
+        <Column field="won_matches" sortable header="V"></Column>
+        <Column field="drawn_matches" sortable header="PA"></Column>
+        <Column field="lost_matches" sortable header="PE"></Column>
+        <Column field="goals_scored" sortable header="GF"></Column>
+        <Column field="goals_conceded" sortable header="GS"></Column>
+        <Column field="fair_play" sortable header="CD"></Column>
+      </DataTable>
       </div>
-
-      <div class="container-fluid ps-2">
-        <div class="row g-1" v-for="l in legend" :key="l.id">
-          <div class="col-2">
-            <strong>{{ l.name }}</strong>
-          </div>
-          <div class="col">{{ l.description }}</div>
-        </div>
-      </div>
-      <Modal v-if="modal"></Modal>
-      
     </ion-content>
   </ion-page>
 </template>
 
 <script lang="ts" setup>
 import SearchToolbar from "@/components/SearchToolbar.vue";
-import Modal from "@/components/Modal.vue"
 /* IONIC COMPONENTS */
 import { IonContent, IonHeader, IonPage, IonFabButton, IonIcon } from "@ionic/vue";
 import { onMounted, ref } from "vue";
@@ -67,7 +45,7 @@ import { useStore } from "@/store/main";
 
 let teams = ref<any>([]);
 
-let modal = ref(false)
+let modal = ref(false);
 
 const legend = ref([
   { id: 1, name: "PT", description: "Punti totali" },
@@ -84,10 +62,9 @@ function onClickRow(team: any) {
   console.log("team", team);
 }
 
-function onClickHead(){
+function onClickHead() {
   modal.value = !modal.value;
-  console.log('modal.value', modal.value);
-
+  console.log("modal.value", modal.value);
 }
 
 onMounted(async () => {
@@ -95,13 +72,18 @@ onMounted(async () => {
   const response = await getStandingsFromAICSWebPage();
   teams.value = response.data.data;
   useStore().httpRequestOnGoing = false;
-
 });
 </script>
 
+
 <style scoped>
-.table-container {
-  height: 50vh;
-  overflow: auto;
+
+.custom-table :deep(.p-datatable-tbody > tr > td){
+  padding: 6px;
+}
+
+.card{
+  display: flex;
+  height: 100%;
 }
 </style>

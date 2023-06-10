@@ -6,10 +6,20 @@ export async function setTheme(isDark: boolean) {
   } catch (e) {
     console.log("Error during setting status overlay")
   }
+  setPrimeVueTheme(isDark);
   if (isDark) {
     setDarkTheme();
   }else{
     setLightTheme();
+
+  }
+}
+
+function setPrimeVueTheme(isDark = false){
+  const themeLink = document.getElementById("theme-link") as HTMLLinkElement | null;
+  if(themeLink){
+    themeLink.href = `/themes/lara-${isDark ? 'dark' : 'light'}-indigo/theme.css`;
+
   }
 }
 

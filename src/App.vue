@@ -8,10 +8,10 @@
       <ion-router-outlet></ion-router-outlet>
       <ion-tab-bar slot="bottom">
 
-        <ion-tab-button tab="matches" href="/matches">
+        <!-- <ion-tab-button tab="matches" href="/matches">
           <font-awesome-icon size="2x" :icon="['fas', 'futbol']" />
           <ion-label>Partite</ion-label>
-        </ion-tab-button>
+        </ion-tab-button> -->
 
         <ion-tab-button tab="ranking" href="/standings">
           <font-awesome-icon size="2x" :icon="['fas', 'trophy']" />
@@ -20,7 +20,7 @@
 
         <ion-tab-button tab="players" href="/players">
           <font-awesome-icon size="2x" :icon="['fas', 'people-group']" />
-          <ion-label>Giocatori</ion-label>
+          <ion-label>Marcatori</ion-label>
         </ion-tab-button>
       </ion-tab-bar>
     </ion-tabs>

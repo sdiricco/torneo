@@ -4,29 +4,18 @@
       <SearchToolbar />
     </ion-header>
     <ion-content :fullscreen="true">
-      <div class="table-container">
-        <table class="table table-sm mb-5">
-          <thead class="table-light sticky-top">
-            <tr>
-              <th scope="col"></th>
-              <th scope="col">Nome</th>
-              <th scope="col">Cognome</th>
-              <th scope="col">Squadra</th>
-              <th scope="col">G</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="(player, id) in players" :key="id" @click="onClickRow(player)">
-              <th scope="row">{{ id + 1 }}</th>
-              <td class="text-truncate" style="max-width: 150px">{{ player.firstName }}</td>
-              <td class="text-truncate" style="max-width: 150px">{{ player.lastName }}</td>
-              <td class="text-truncate" style="max-width: 150px">{{ player.team }}</td>
-              <td>
-                <strong>{{ player.goal }}</strong>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+      <div class="card">
+        <DataTable scrollable scrollHeight="flex" :class="`p-datatable-sm custom-table`" :value="players" dataKey="team" stripedRows>
+          <Column frozen>
+            <template #body="{ index }">
+              {{ index }}
+            </template>
+          </Column>
+          <Column field="firstName" sortable header="Nome"></Column>
+          <Column field="lastName" sortable header="Cognome"></Column>
+          <Column field="goal" sortable header="G" class="font-bold"></Column>
+          <Column field="team" sortable header="Squadra" style="width: 180px; max-width: 180px;" class="white-space-nowrap overflow-x-hidden text-overflow-ellipsis"  ></Column>
+        </DataTable>
       </div>
     </ion-content>
   </ion-page>
@@ -53,8 +42,12 @@ onMounted(async () => {
 </script>
 
 <style scoped>
-.table-container {
-  height: 50vh;
-  overflow: auto;
+.custom-table :deep(.p-datatable-tbody > tr > td){
+  padding: 6px;
+}
+
+.card{
+  display: flex;
+  height: 100%;
 }
 </style>

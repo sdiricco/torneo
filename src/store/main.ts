@@ -2,6 +2,8 @@ import { defineStore } from "pinia";
 import { Preferences } from "@capacitor/preferences";
 import { setTheme } from "@/theme/utility";
 import { Network } from '@capacitor/network';
+import useTheme from "@/composables/useTheme"
+
 
 
 interface IState {
@@ -37,6 +39,7 @@ export const useStore = defineStore({
       console.log("Toggle theme");
       console.log("\tisDark", isDark);
       await setTheme(isDark);
+
     },
     async fetchPreferences() {
       console.log("Fetch preferences");

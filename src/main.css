@@ -1,3 +1,10 @@
-.mt32{
-    margin-top: 32px;
+body {
+    font-family: var(--font-family);
+    color: var(--text-color);
+    margin: 0px;
+}
+
+*:focus{
+    box-shadow: none !important;
+    outline: none !important;
 }
