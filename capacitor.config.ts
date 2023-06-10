@@ -1,8 +1,8 @@
 import { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'io.ionic.cities.app',
-  appName: 'cities-app',
+  appId: 'io.ionic.torneo.app',
+  appName: 'torneo',
   webDir: 'dist',
   bundledWebRuntime: false
 };
