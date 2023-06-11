@@ -82,6 +82,10 @@ onMounted(async () => {
   padding: 6px;
 }
 
+.custom-table{
+  width: 100%;
+}
+
 .card{
   display: flex;
   height: 100%;
