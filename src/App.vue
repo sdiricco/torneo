@@ -1,8 +1,8 @@
 <template>
   <ion-app>
-    <ion-menu content-id="main-content">
+    <!-- <ion-menu content-id="main-content">
       <sider-bar></sider-bar>
-    </ion-menu>
+    </ion-menu> -->
     <ion-page id="main-content">
       <ion-tabs>
       <ion-router-outlet></ion-router-outlet>
@@ -30,7 +30,7 @@
 
 <script lang="ts" setup>
 import { IonApp, IonRouterOutlet, IonPage, IonMenu, IonTabBar, IonTabButton, IonLabel, IonIcon, IonTabs } from "@ionic/vue";
-import  SiderBar from './components/SideBar.vue'
+// import  SiderBar from './components/SideBar.vue'
 import { onMounted } from "vue";
 import { useStore } from "@/store/main";
 

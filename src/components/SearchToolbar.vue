@@ -1,8 +1,8 @@
 <template>
   <ion-toolbar color="primary">
-    <ion-buttons slot="start">
+    <!-- <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
-    </ion-buttons>
+    </ion-buttons> -->
     <ion-title>Calcio a 5 - Poggio</ion-title>
     <ion-progress-bar type="indeterminate" v-if="store.httpRequestOnGoing" color="secondary"></ion-progress-bar>
   </ion-toolbar>

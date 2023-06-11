@@ -1,8 +1,8 @@
 <template>
   <ion-header >
-    <ion-toolbar class="pt64 pb16" color="primary">
+    <ion-toolbar color="primary">
       <h3 class="ion-padding-horizontal">Template PRO</h3>
-      <div class="ion-padding-horizontal pb16">v: {{ store.appVersion }}</div>
+      <div class="ion-padding-horizontal">v: {{ store.appVersion }}</div>
     </ion-toolbar>
   </ion-header>
   <ion-content>
