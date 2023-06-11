@@ -3,6 +3,7 @@ import { Preferences } from "@capacitor/preferences";
 import { setTheme } from "@/theme/utility";
 import { Network } from '@capacitor/network';
 import useTheme from "@/composables/useTheme"
+import { getPlayersFromAICSWebPage, getStandingsFromAICSWebPage } from "@/services/scraper";
 
 
 
@@ -16,6 +17,10 @@ interface IState {
   preferences: {
     isDark: boolean;
   },
+  teams: any[];
+  players: any[];
+  longLoadingID: any;
+  longLoading: boolean;
 }
 export const useStore = defineStore({
   id: "store",
@@ -28,7 +33,11 @@ export const useStore = defineStore({
     },
     preferences: {
       isDark: false,
-    }
+    },
+    teams: [],
+    players: [],
+    longLoadingID:null,
+    longLoading:false,
   }),
   getters: {
     isDark: (state: any) => state.preferences.isDark,
@@ -88,6 +97,30 @@ export const useStore = defineStore({
     },
     async clear() {
       await Preferences.clear();
+    },
+    async fecthStandings(){
+      this.httpRequestOnGoing = true;
+      this.longLoadingID = setTimeout(()=> {
+        this.longLoading = true
+      }, 5000)
+      const response = await getStandingsFromAICSWebPage();
+      clearTimeout(this.longLoadingID)
+      this.longLoading = false;
+      this.longLoadingID = null;
+      this.teams = response.data.data;
+      this.httpRequestOnGoing = false;
+    },
+    async fetchPlayers(){
+      this.httpRequestOnGoing = true;
+      this.longLoadingID = setTimeout(()=> {
+        this.longLoading = true
+      }, 5000)
+      const response = await getPlayersFromAICSWebPage();
+      clearTimeout(this.longLoadingID)
+      this.longLoading = false;
+      this.longLoadingID = null;
+      this.players = response.data.data;
+      this.httpRequestOnGoing = false;
     }
   },
 });

@@ -5,7 +5,7 @@
     </ion-header>
     <ion-content :fullscreen="true">
       <div class="card">
-        <DataTable scrollable scrollHeight="flex" :class="`p-datatable-sm custom-table`" :value="players" dataKey="team" stripedRows>
+        <DataTable scrollable scrollHeight="flex" :class="`p-datatable-sm custom-table`" :value="mainStore.players" dataKey="team" stripedRows>
           <Column frozen>
             <template #body="{ index }">
               {{ index }}
@@ -24,20 +24,12 @@
 import { IonContent, IonHeader, IonPage } from "@ionic/vue";
 import SearchToolbar from "@/components/SearchToolbar.vue";
 import { onMounted, ref } from "vue";
-import { getPlayersFromAICSWebPage } from "@/services/scraper";
 import { useStore } from "@/store/main";
 
-let players = ref<any>([]);
-
-function onClickRow(player: any) {
-  console.log(player);
-}
+const mainStore = useStore();
 
 onMounted(async () => {
-  useStore().httpRequestOnGoing = true;
-  const response = await getPlayersFromAICSWebPage();
-  players.value = response.data.data;
-  useStore().httpRequestOnGoing = false;
+  await mainStore.fetchPlayers();
 });
 </script>
 

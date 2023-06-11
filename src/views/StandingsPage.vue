@@ -12,7 +12,7 @@
         scrollable 
         scrollHeight="flex"
         :class="`p-datatable-sm custom-table`"
-        :value="teams"
+        :value="mainStore.teams"
         dataKey="name"
         stripedRows>
         <Column frozen>
@@ -30,6 +30,8 @@
         <Column field="goals_conceded" sortable header="GS"></Column>
         <Column field="fair_play" sortable header="CD"></Column>
       </DataTable>
+
+
       </div>
     </ion-content>
   </ion-page>
@@ -38,40 +40,14 @@
 <script lang="ts" setup>
 import SearchToolbar from "@/components/SearchToolbar.vue";
 /* IONIC COMPONENTS */
-import { IonContent, IonHeader, IonPage, IonFabButton, IonIcon } from "@ionic/vue";
+import { IonContent, IonHeader, IonPage } from "@ionic/vue";
 import { onMounted, ref } from "vue";
-import { getStandingsFromAICSWebPage } from "@/services/scraper";
 import { useStore } from "@/store/main";
 
-let teams = ref<any>([]);
-
-let modal = ref(false);
-
-const legend = ref([
-  { id: 1, name: "PT", description: "Punti totali" },
-  { id: 2, name: "G", description: "Partite giocate" },
-  { id: 3, name: "V", description: "Partite vinte" },
-  { id: 4, name: "PA", description: "Partite pareggiate" },
-  { id: 5, name: "PE", description: "Partite perse" },
-  { id: 6, name: "GF", description: "Gol fatti" },
-  { id: 7, name: "GS", description: "Gol subiti" },
-  { id: 8, name: "CD", description: "Coppa Disciplina" },
-]);
-
-function onClickRow(team: any) {
-  console.log("team", team);
-}
-
-function onClickHead() {
-  modal.value = !modal.value;
-  console.log("modal.value", modal.value);
-}
+const mainStore = useStore();
 
 onMounted(async () => {
-  useStore().httpRequestOnGoing = true;
-  const response = await getStandingsFromAICSWebPage();
-  teams.value = response.data.data;
-  useStore().httpRequestOnGoing = false;
+  await mainStore.fecthStandings();
 });
 </script>
 

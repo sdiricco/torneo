@@ -125,7 +125,7 @@ library.add(faUserSecret, faSatelliteDish, faMoon, faSun, faWifi, faMagnifyingGl
 
 const pinia = createPinia();
 
-const app = createApp(App).component("font-awesome-icon", FontAwesomeIcon).use(pinia).use(IonicVue).use(PrimeVue, { ripple: true }).use(router);
+const app = createApp(App).component("font-awesome-icon", FontAwesomeIcon).use(pinia).use(IonicVue).use(PrimeVue, { ripple: true }).use(ToastService).use(router);
 
   /*****************************************************************************/
   /* PRIME VUE - COMPONENTS */
