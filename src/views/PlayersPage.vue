@@ -17,16 +17,25 @@
           <Column field="team" sortable header="Squadra" style="width: 180px; max-width: 180px;" class="white-space-nowrap overflow-x-hidden text-overflow-ellipsis"  ></Column>
         </DataTable>
       </div>
+      <ion-refresher slot="fixed" @ionRefresh="handleRefresh($event)">
+        <ion-refresher-content></ion-refresher-content>
+      </ion-refresher>
     </ion-content>
   </ion-page>
 </template>
 <script lang="ts" setup>
-import { IonContent, IonHeader, IonPage } from "@ionic/vue";
+import { IonContent, IonHeader, IonPage, IonRefresher, IonRefresherContent  } from "@ionic/vue";
 import SearchToolbar from "@/components/SearchToolbar.vue";
 import { onMounted, ref } from "vue";
 import { useStore } from "@/store/main";
 
 const mainStore = useStore();
+
+
+const handleRefresh = async (event: any) => {
+  await mainStore.fetchPlayers();
+  event.target.complete();
+};
 
 onMounted(async () => {
   await mainStore.fetchPlayers();
