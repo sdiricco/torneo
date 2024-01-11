@@ -1,9 +1,15 @@
 import axios from "axios";
 
-export async function getStandingsFromAICSWebPage(){
-  return await axios.get('https://torneo-api.onrender.com/api/v1/torneo/standings')
+const baseurl = 'https://torneo-api.onrender.com/api/v1/torneo'
+
+export async function getTournamentsFromAICSWebPage(){
+  return await axios.get(`${baseurl}/tournaments`)
 }
 
-export async function getPlayersFromAICSWebPage(){
-  return await axios.get('https://torneo-api.onrender.com/api/v1/torneo/players')
+export async function getStandingsFromAICSWebPage(id:string){
+  return await axios.get(`${baseurl}/standings`, {params: {id}})
+}
+
+export async function getPlayersFromAICSWebPage(id:string){
+  return await axios.get(`${baseurl}/players`,{params: {id}})
 }

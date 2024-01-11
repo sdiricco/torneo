@@ -3,7 +3,7 @@ import { Preferences } from "@capacitor/preferences";
 import { setTheme } from "@/theme/utility";
 import { Network } from '@capacitor/network';
 import useTheme from "@/composables/useTheme"
-import { getPlayersFromAICSWebPage, getStandingsFromAICSWebPage } from "@/services/scraper";
+import { getPlayersFromAICSWebPage, getStandingsFromAICSWebPage, getTournamentsFromAICSWebPage } from "@/services/scraper";
 
 
 
@@ -17,6 +17,7 @@ interface IState {
   preferences: {
     isDark: boolean;
   },
+  tournaments: any[];
   teams: any[];
   players: any[];
   longLoadingID: any;
@@ -34,6 +35,7 @@ export const useStore = defineStore({
     preferences: {
       isDark: false,
     },
+    tournaments: [],
     teams: [],
     players: [],
     longLoadingID:null,
@@ -98,24 +100,36 @@ export const useStore = defineStore({
     async clear() {
       await Preferences.clear();
     },
-    async fecthStandings(){
+    async fecthTournaments(){
       this.httpRequestOnGoing = true;
       this.longLoadingID = setTimeout(()=> {
         this.longLoading = true
       }, 5000)
-      const response = await getStandingsFromAICSWebPage();
+      const response = await getTournamentsFromAICSWebPage();
+      clearTimeout(this.longLoadingID)
+      this.longLoading = false;
+      this.longLoadingID = null;
+      this.tournaments = response.data.data;
+      this.httpRequestOnGoing = false;
+    },
+    async fecthStandings(id:string){
+      this.httpRequestOnGoing = true;
+      this.longLoadingID = setTimeout(()=> {
+        this.longLoading = true
+      }, 5000)
+      const response = await getStandingsFromAICSWebPage(id);
       clearTimeout(this.longLoadingID)
       this.longLoading = false;
       this.longLoadingID = null;
       this.teams = response.data.data;
       this.httpRequestOnGoing = false;
     },
-    async fetchPlayers(){
+    async fetchPlayers(id:string){
       this.httpRequestOnGoing = true;
       this.longLoadingID = setTimeout(()=> {
         this.longLoading = true
       }, 5000)
-      const response = await getPlayersFromAICSWebPage();
+      const response = await getPlayersFromAICSWebPage(id);
       clearTimeout(this.longLoadingID)
       this.longLoading = false;
       this.longLoadingID = null;

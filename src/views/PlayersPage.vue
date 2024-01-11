@@ -28,17 +28,23 @@ import { IonContent, IonHeader, IonPage, IonRefresher, IonRefresherContent  } fr
 import SearchToolbar from "@/components/SearchToolbar.vue";
 import { onMounted, ref } from "vue";
 import { useStore } from "@/store/main";
+import {useRoute}from "vue-router"
+
 
 const mainStore = useStore();
 
+const id = useRoute().params.id as string
+
+console.log(id)
+
 
 const handleRefresh = async (event: any) => {
-  await mainStore.fetchPlayers();
+  await mainStore.fetchPlayers(id);
   event.target.complete();
 };
 
 onMounted(async () => {
-  await mainStore.fetchPlayers();
+  await mainStore.fetchPlayers(id);
 });
 </script>
 

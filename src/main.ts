@@ -11,6 +11,7 @@ import "./main.css";
 import "/node_modules/primeflex/primeflex.css";
 //core
 import "primevue/resources/primevue.min.css";
+import 'primeicons/primeicons.css'
 
 /*********************************************
  * IONIC

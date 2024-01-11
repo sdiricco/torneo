@@ -1,8 +1,8 @@
 <template>
   <ion-toolbar color="primary">
-    <!-- <ion-buttons slot="start">
-      <ion-menu-button></ion-menu-button>
-    </ion-buttons> -->
+    <ion-buttons slot="start">
+      <i class="p-2 pl-4 pi pi-arrow-left cursor-pointer" @click="onBack"></i>
+    </ion-buttons>
     <ion-title>Calcio a 5 - Poggio</ion-title>
     <ion-progress-bar type="indeterminate" v-if="store.httpRequestOnGoing" color="secondary"></ion-progress-bar>
   </ion-toolbar>
@@ -12,7 +12,13 @@
 import { IonToolbar, IonProgressBar, IonButtons, IonMenuButton, IonTitle, IonBreadcrumb, IonBreadcrumbs} from "@ionic/vue";
 
 import { useStore } from "@/store/main";
+import router from "@/router";
+
 const store = useStore();
+
+function onBack(){
+  router.go(-1)
+}
 
 </script>
 
