@@ -17,7 +17,7 @@ import router from "@/router";
 const store = useStore();
 
 function onBack(){
-  router.go(-1)
+  router.push({name: 'TournamentsPage'})
 }
 
 </script>

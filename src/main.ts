@@ -13,6 +13,8 @@ import "/node_modules/primeflex/primeflex.css";
 import "primevue/resources/primevue.min.css";
 import 'primeicons/primeicons.css'
 
+import './main.css'
+
 /*********************************************
  * IONIC
  *********************************************/

@@ -3,7 +3,7 @@ import { Preferences } from "@capacitor/preferences";
 import { setTheme } from "@/theme/utility";
 import { Network } from '@capacitor/network';
 import useTheme from "@/composables/useTheme"
-import { getPlayersFromAICSWebPage, getStandingsFromAICSWebPage, getTournamentsFromAICSWebPage } from "@/services/scraper";
+import { getPlayersFromAICSWebPage, getStandingsFromAICSWebPage, getTournamentsFromAICSWebPage } from "@/services/api";
 
 
 
