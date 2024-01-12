@@ -1,7 +1,7 @@
 <template>
   <TournamentPageTemplate>
     <template #header>
-      <SearchToolbar />
+      <PageHeader />
     </template>
     <PlayersRoot />
   </TournamentPageTemplate>
@@ -10,6 +10,6 @@
 <script lang="ts" setup>
 import TournamentPageTemplate from "@/components/layout/TournamentPageTemplate.vue";
 import PlayersRoot from '@/components/pages/players-ranking/PlayersRoot.vue';
-import SearchToolbar from "@/components/SearchToolbar.vue";
+import PageHeader from "@/components/PageHeader.vue";
 </script>
 

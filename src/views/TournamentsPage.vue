@@ -1,7 +1,18 @@
 <template>
   <TournamentsPageTemplate>
     <div class="p-4">
-      <Accordion :activeIndex="0">
+      <div v-if="!tournaments.length" class="text-center mt-6">
+        <div class="flex align-items-center justify-content-center">
+          <div class="font-bold text-color-secondary mr-2">
+            E' necessario aspettare fino a un minuto
+          </div>
+          <i class="pi pi-exclamation-circle text-color-secondary"></i>
+        </div>
+
+        <div class="text-4xl text-color mb-6">Mi sto connettendo al server</div>
+        <i class="pi pi-spin pi-spinner" style="font-size: 2rem"></i>
+      </div>
+      <Accordion :activeIndex="0" v-else>
         <AccordionTab
           v-for="(tournamentsFiltered, key) in tournamentsGrouped"
           :key="key"

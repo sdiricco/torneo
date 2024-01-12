@@ -4,7 +4,9 @@ import { setTheme } from "@/theme/utility";
 import { Network } from '@capacitor/network';
 import useTheme from "@/composables/useTheme"
 import { getPlayersFromAICSWebPage, getStandingsFromAICSWebPage, getTournamentsFromAICSWebPage } from "@/services/api";
+import { useRoute } from "vue-router";
 
+const route = useRoute();
 
 
 interface IState {
@@ -18,6 +20,7 @@ interface IState {
     isDark: boolean;
   },
   tournaments: any[];
+  tournamentDetails: any;
   teams: any[];
   players: any[];
   longLoadingID: any;
@@ -36,6 +39,7 @@ export const useStore = defineStore({
       isDark: false,
     },
     tournaments: [],
+    tournamentDetails: {},
     teams: [],
     players: [],
     longLoadingID:null,
@@ -101,6 +105,7 @@ export const useStore = defineStore({
       await Preferences.clear();
     },
     async fecthTournaments(){
+      this.tournaments = [];
       this.httpRequestOnGoing = true;
       this.longLoadingID = setTimeout(()=> {
         this.longLoading = true
@@ -113,6 +118,7 @@ export const useStore = defineStore({
       this.httpRequestOnGoing = false;
     },
     async fecthStandings(id:string){
+      this.teams = [];
       this.httpRequestOnGoing = true;
       this.longLoadingID = setTimeout(()=> {
         this.longLoading = true
@@ -125,6 +131,7 @@ export const useStore = defineStore({
       this.httpRequestOnGoing = false;
     },
     async fetchPlayers(id:string){
+      this.players = []
       this.httpRequestOnGoing = true;
       this.longLoadingID = setTimeout(()=> {
         this.longLoading = true
