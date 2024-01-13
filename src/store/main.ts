@@ -3,7 +3,7 @@ import { Preferences } from "@capacitor/preferences";
 import { setTheme } from "@/theme/utility";
 import { Network } from '@capacitor/network';
 import useTheme from "@/composables/useTheme"
-import { getPlayersFromAICSWebPage, getStandingsFromAICSWebPage, getTournamentsFromAICSWebPage } from "@/services/api";
+import { getPlayersFromAICSWebPage, getStandingsFromAICSWebPage, getTournamentsFromAICSWebPage, getTournamentDetailFromAICSWebPage } from "@/services/api";
 import { useRoute } from "vue-router";
 
 const route = useRoute();
@@ -39,7 +39,7 @@ export const useStore = defineStore({
       isDark: false,
     },
     tournaments: [],
-    tournamentDetails: {},
+    tournamentDetails: undefined,
     teams: [],
     players: [],
     longLoadingID:null,
@@ -115,6 +115,19 @@ export const useStore = defineStore({
       this.longLoading = false;
       this.longLoadingID = null;
       this.tournaments = response.data.data;
+      this.httpRequestOnGoing = false;
+    },
+    async fecthTournamentDetails(id:string){
+      this.tournamentDetails = undefined;
+      this.httpRequestOnGoing = true;
+      this.longLoadingID = setTimeout(()=> {
+        this.longLoading = true
+      }, 5000)
+      const response = await getTournamentDetailFromAICSWebPage(id)
+      clearTimeout(this.longLoadingID)
+      this.longLoading = false;
+      this.longLoadingID = null;
+      this.tournamentDetails = response.data.data;
       this.httpRequestOnGoing = false;
     },
     async fecthStandings(id:string){
