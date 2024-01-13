@@ -1,5 +1,5 @@
 <template>
-  <div class="text-center p-6">
+  <div class="text-center mt-4">
     <div class="flex align-items-center justify-content-center mb-2">
       <div class="font-bold text-color-secondary mr-2">
         L'attesa stimata è di circa 30 secondi
