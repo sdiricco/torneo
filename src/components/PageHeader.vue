@@ -4,7 +4,7 @@
       <i class="p-2 pl-4 pi pi-arrow-left cursor-pointer" @click="onBack"></i>
     </ion-buttons>
     <ion-title>
-      <slot/>
+      {{ title }}
     </ion-title>
     <ion-progress-bar type="indeterminate" v-if="store.httpRequestOnGoing" color="secondary"></ion-progress-bar>
   </ion-toolbar>
@@ -15,6 +15,8 @@ import { IonToolbar, IonProgressBar, IonButtons, IonMenuButton, IonTitle, IonBre
 
 import { useStore } from "@/store/main";
 import router from "@/router";
+
+defineProps(['title'])
 
 const store = useStore();
 

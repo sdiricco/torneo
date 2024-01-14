@@ -4,7 +4,7 @@
       scrollable
       scrollHeight="flex"
       :class="`p-datatable-sm custom-table`"
-      :value="mainStore.players"
+      :value="players"
       dataKey="team"
       stripedRows
     >
@@ -27,20 +27,10 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { onMounted, } from "vue";
 import { useStore } from "@/store/main";
-import { useRoute } from "vue-router";
+import {storeToRefs} from "pinia"
 
-const mainStore = useStore();
-
-const id = useRoute().params.id as string;
-
-console.log(id);
-
-
-onMounted(async () => {
-  await mainStore.fetchPlayers(id);
-});
+const {players} =storeToRefs(useStore())
 </script>
 
 <style scoped>

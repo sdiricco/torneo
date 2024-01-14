@@ -1,11 +1,9 @@
 /* eslint-disable */
 
 <template>
-  <TournamentPageTemplate>
+  <TournamentPageTemplate @refresh="onRefresh">
     <template #header>
-      <PageHeader>
-        {{ tournamentName }}
-      </PageHeader>
+      <PageHeader :title="tournamentName"></PageHeader>
     </template>
     <TournamentRoot />
   </TournamentPageTemplate>
@@ -17,11 +15,26 @@ import TournamentRoot from "@/components/pages/tournament-ranking/TournamentRoot
 import PageHeader from "@/components/PageHeader.vue";
 import { storeToRefs } from "pinia";
 import { useStore } from "@/store/main";
-import { computed } from "vue";
+import { computed, onMounted } from "vue";
+import { useRoute } from "vue-router";
 
+
+const store = useStore();
 const { tournamentDetails } = storeToRefs(useStore());
+
+const id = useRoute().params.id as string
 
 const tournamentName = computed(
   () => tournamentDetails.value && tournamentDetails.value.name
 );
+
+
+async function onRefresh(){
+  await store.fecthStandings(id)
+}
+
+onMounted(async()=> {
+  await store.fecthStandings(id)
+})
+
 </script>

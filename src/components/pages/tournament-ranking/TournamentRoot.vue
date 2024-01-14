@@ -6,7 +6,7 @@
       scrollable
       scrollHeight="flex"
       :class="`p-datatable-sm custom-table`"
-      :value="mainStore.teams"
+      :value="teams"
       dataKey="name"
       stripedRows
     >
@@ -44,25 +44,11 @@
 </template>
 
 <script lang="ts" setup>
-import { onMounted, } from "vue";
 import { useStore } from "@/store/main";
 import { standingsLegend } from "@/constants";
-import { useRoute } from "vue-router";
+import { storeToRefs } from "pinia";
 
-const id = useRoute().params.id as string;
-
-console.log(id);
-
-const mainStore = useStore();
-
-const handleRefresh = async (event: any) => {
-  await mainStore.fecthStandings(id);
-  event.target.complete();
-};
-
-onMounted(async () => {
-  await mainStore.fecthStandings(id);
-});
+const { teams } = storeToRefs(useStore());
 </script>
 
 <style scoped>
