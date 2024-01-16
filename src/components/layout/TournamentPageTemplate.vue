@@ -21,12 +21,10 @@ import {
   IonRefresherContent,
 } from "@ionic/vue";
 
-const emit = defineEmits(['refresh'])
+const emit = defineEmits(["refresh"]);
 
-
-function onRefresh(evt:any){
-  emit('refresh')
-  evt.target.complete()
+function onRefresh(evt: any) {
+  emit("refresh");
+  evt.target.complete();
 }
-
 </script>

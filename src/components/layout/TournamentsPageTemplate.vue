@@ -1,5 +1,8 @@
 <template>
   <ion-page>
+    <ion-header>
+      <slot name="header" />
+    </ion-header>
     <ion-content :fullscreen="true">
       <slot />
     </ion-content>
@@ -7,5 +10,5 @@
 </template>
 
 <script lang="ts" setup>
-import { IonContent, IonPage } from "@ionic/vue";
+import { IonContent, IonPage, IonHeader } from "@ionic/vue";
 </script>

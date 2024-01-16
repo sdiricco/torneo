@@ -3,7 +3,7 @@ import { Preferences } from "@capacitor/preferences";
 import { setTheme } from "@/theme/utility";
 import { Network } from '@capacitor/network';
 import useTheme from "@/composables/useTheme"
-import { getPlayersFromAICSWebPage, getStandingsFromAICSWebPage, getTournamentsFromAICSWebPage, getTournamentDetailFromAICSWebPage } from "@/services/api";
+import { getPlayersFromAICSWebPage, getStandingsFromAICSWebPage, getTournamentsFromAICSWebPage, getTournamentDetailFromAICSWebPage, getMatchResults } from "@/services/api";
 import { useRoute } from "vue-router";
 
 const route = useRoute();
@@ -23,6 +23,7 @@ interface IState {
   tournamentDetails: any;
   teams: any[];
   players: any[];
+  results: any;
   longLoadingID: any;
   longLoading: boolean;
 }
@@ -42,6 +43,7 @@ export const useStore = defineStore({
     tournamentDetails: undefined,
     teams: [],
     players: [],
+    results: undefined,
     longLoadingID:null,
     longLoading:false,
   }),
@@ -140,7 +142,12 @@ export const useStore = defineStore({
       clearTimeout(this.longLoadingID)
       this.longLoading = false;
       this.longLoadingID = null;
-      this.teams = response.data.data;
+      this.teams = response.data.data.map((_:any) => {
+        return{
+          ..._,
+          goal: Number(_.points)
+        }
+      });;
       this.httpRequestOnGoing = false;
     },
     async fetchPlayers(id:string){
@@ -153,7 +160,25 @@ export const useStore = defineStore({
       clearTimeout(this.longLoadingID)
       this.longLoading = false;
       this.longLoadingID = null;
-      this.players = response.data.data;
+      this.players = response.data.data.map((p:any) => {
+        return{
+          ...p,
+          goal: Number(p.goal)
+        }
+      });
+      this.httpRequestOnGoing = false;
+    },
+    async fetchMatchResults(id:string){
+      this.results = []
+      this.httpRequestOnGoing = true;
+      this.longLoadingID = setTimeout(()=> {
+        this.longLoading = true
+      }, 5000)
+      const response = await getMatchResults(id);
+      clearTimeout(this.longLoadingID)
+      this.longLoading = false;
+      this.longLoadingID = null;
+      this.results = response.data.data;
       this.httpRequestOnGoing = false;
     }
   },

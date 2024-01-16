@@ -1,6 +1,6 @@
 <template>
-  <ion-toolbar color="primary">
-    <ion-buttons slot="start">
+  <ion-toolbar>
+    <ion-buttons slot="start" v-if="showBackButton">
       <i class="p-2 pl-4 pi pi-arrow-left cursor-pointer" @click="onBack"></i>
     </ion-buttons>
     <ion-title>
@@ -16,7 +16,7 @@ import { IonToolbar, IonProgressBar, IonButtons, IonMenuButton, IonTitle, IonBre
 import { useStore } from "@/store/main";
 import router from "@/router";
 
-defineProps(['title'])
+defineProps(['title', 'showBackButton'])
 
 const store = useStore();
 

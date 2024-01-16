@@ -3,6 +3,7 @@ import { RouteRecordRaw } from 'vue-router';
 
 const tournamentsPage = () => import('@/views/TournamentsPage.vue')
 const tournamentHomePage = () => import('@/views/TournamentHome.vue')
+const tournamentDashboard = () => import('@/views/DashboardPage.vue')
 const tournamentRankingsPage = () => import('@/views/TournamentRankingPage.vue')
 const playersRankingPage = () => import('@/views/PlayersRankingPage.vue')
 
@@ -23,6 +24,11 @@ const routes: Array<RouteRecordRaw> = [
     component: tournamentHomePage,
     redirect: to => ({ name: 'TournamentRankingPage', params: { id: to.params.id } }),
     children: [
+      {
+        path: 'dashboard',
+        name: 'TournamentDashboard',
+        component: tournamentDashboard,
+      },
       {
         path: 'standings',
         name: 'TournamentRankingPage',

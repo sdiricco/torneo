@@ -35,6 +35,11 @@ const route = useRoute();
 const id = route.params.id;
 
 const tabs = [
+{
+    name: "TournamentDashboard",
+    label: "Home",
+    icon: ["fas", "home"],
+  },
   {
     name: "TournamentRankingPage",
     label: "Classifica",

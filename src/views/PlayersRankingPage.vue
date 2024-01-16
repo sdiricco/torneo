@@ -1,7 +1,7 @@
 <template>
   <TournamentPageTemplate @refresh="onRefresh">
     <template #header>
-      <PageHeader :title="tournamentName"></PageHeader>
+      <PageHeader :title="tournamentName" :show-back-button="true"></PageHeader>
     </template>
     <PlayersRoot />
   </TournamentPageTemplate>
