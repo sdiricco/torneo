@@ -1,3 +1,5 @@
+export const TORNEO_API_BASE_URL = process.env.VUE_APP_TORNEO_API_BASE_URL
+
 export const standingsLegend = {
     'PT': 'Punti totali',
     'G': 'Partite giocate',
