@@ -14,7 +14,7 @@ import PageHeader from "@/components/PageHeader.vue";
 
 import { storeToRefs } from "pinia";
 import { useStore } from "@/store/main";
-import { computed, onMounted } from "vue";
+import { computed, onBeforeMount } from "vue";
 import { useRoute } from "vue-router";
 
 const store = useStore();
@@ -30,7 +30,7 @@ async function onRefresh(){
   await store.fetchPlayers(id)
 }
 
-onMounted(async()=> {
+onBeforeMount(async()=> {
   await store.fetchPlayers(id)
 })
 </script>

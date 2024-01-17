@@ -22,7 +22,7 @@ const routes: Array<RouteRecordRaw> = [
     path: '/tournaments/:id',
     name: 'TournamentHome',
     component: tournamentHomePage,
-    redirect: to => ({ name: 'TournamentRankingPage', params: { id: to.params.id } }),
+    redirect: to => ({ name: 'TournamentDashboard', params: { id: to.params.id } }),
     children: [
       {
         path: 'dashboard',

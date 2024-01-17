@@ -15,7 +15,7 @@ import TournamentRoot from "@/components/pages/tournament-ranking/TournamentRoot
 import PageHeader from "@/components/PageHeader.vue";
 import { storeToRefs } from "pinia";
 import { useStore } from "@/store/main";
-import { computed, onMounted } from "vue";
+import { computed, onBeforeMount } from "vue";
 import { useRoute } from "vue-router";
 
 
@@ -33,7 +33,7 @@ async function onRefresh(){
   await store.fecthStandings(id)
 }
 
-onMounted(async()=> {
+onBeforeMount(async()=> {
   await store.fecthStandings(id)
 })
 

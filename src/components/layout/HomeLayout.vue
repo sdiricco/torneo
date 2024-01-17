@@ -9,7 +9,7 @@
           @click="onClickTab(tab.name)"
           :selected="route.name === tab.name"
         >
-          <font-awesome-icon size="2x" :icon="tab.icon" />
+          <font-awesome-icon size="xl" :icon="tab.icon" class="mb-1" />
           <ion-label>{{ tab.label }}</ion-label>
         </ion-tab-button>
       </ion-tab-bar>
