@@ -27,3 +27,12 @@ export async function getPlayersFromAICSWebPage(id:string){
 export async function getMatchResults(id:string){
   return await axios.get(`${baseurl}/tournaments/${id}/match-results`)
 }
+
+export async function getLatestMatchResults(id:string){
+  return await axios.get(`${baseurl}/tournaments/${id}/latest-match-results`)
+}
+
+
+export async function getNextMatches(id:string){
+  return await axios.get(`${baseurl}/tournaments/${id}/next-matches`)
+}

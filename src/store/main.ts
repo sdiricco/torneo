@@ -1,13 +1,20 @@
 import { defineStore } from "pinia";
 import { Preferences } from "@capacitor/preferences";
 import { setTheme } from "@/theme/utility";
-import { Network } from '@capacitor/network';
-import useTheme from "@/composables/useTheme"
-import { getPlayersFromAICSWebPage, getStandingsFromAICSWebPage, getTournamentsFromAICSWebPage, getTournamentDetailFromAICSWebPage, getMatchResults } from "@/services/api";
+import { Network } from "@capacitor/network";
+import useTheme from "@/composables/useTheme";
+import {
+  getPlayersFromAICSWebPage,
+  getStandingsFromAICSWebPage,
+  getTournamentsFromAICSWebPage,
+  getTournamentDetailFromAICSWebPage,
+  getMatchResults,
+  getLatestMatchResults,
+  getNextMatches,
+} from "@/services/api";
 import { useRoute } from "vue-router";
 
 const route = useRoute();
-
 
 interface IState {
   httpRequestOnGoing: boolean;
@@ -15,26 +22,28 @@ interface IState {
   networkStatus: {
     connected: boolean;
     connectionType: string;
-  },
+  };
   preferences: {
     isDark: boolean;
-  },
+  };
   tournaments: any[];
   tournamentDetails: any;
   teams: any[];
   players: any[];
   results: any;
+  latestMatchResults: any[];
+  nextMatches: any[];
   longLoadingID: any;
   longLoading: boolean;
 }
 export const useStore = defineStore({
   id: "store",
-  state: (): IState =>({
+  state: (): IState => ({
     httpRequestOnGoing: false,
     appVersion: "0.0.1",
     networkStatus: {
       connected: true,
-      connectionType: ''
+      connectionType: "",
     },
     preferences: {
       isDark: false,
@@ -44,8 +53,10 @@ export const useStore = defineStore({
     teams: [],
     players: [],
     results: undefined,
-    longLoadingID:null,
-    longLoading:false,
+    latestMatchResults: [],
+    nextMatches: [],
+    longLoadingID: null,
+    longLoading: false,
   }),
   getters: {
     isDark: (state: any) => state.preferences.isDark,
@@ -56,7 +67,6 @@ export const useStore = defineStore({
       console.log("Toggle theme");
       console.log("\tisDark", isDark);
       await setTheme(isDark);
-
     },
     async fetchPreferences() {
       console.log("Fetch preferences");
@@ -82,19 +92,19 @@ export const useStore = defineStore({
         console.log("\tError saving preferences");
       }
     },
-    listenForNetworkChanges(){
-      Network.addListener('networkStatusChange', status => {
+    listenForNetworkChanges() {
+      Network.addListener("networkStatusChange", (status) => {
         this.networkStatus = status;
-        console.log('Network status changed', status.connected);
+        console.log("Network status changed", status.connected);
       });
     },
-    async getNetworkStatus(){
+    async getNetworkStatus() {
       try {
-        const status = await Network.getStatus()
+        const status = await Network.getStatus();
         this.networkStatus = status;
-        console.log('Network status:', status.connected);
+        console.log("Network status:", status.connected);
       } catch (e) {
-        console.log('Error getting network status')
+        console.log("Error getting network status");
       }
     },
     async loadApp() {
@@ -106,80 +116,120 @@ export const useStore = defineStore({
     async clear() {
       await Preferences.clear();
     },
-    async fecthTournaments(){
+
+    //FETCH TOURNAMENTS
+    async fecthTournaments() {
       this.tournaments = [];
       this.httpRequestOnGoing = true;
-      this.longLoadingID = setTimeout(()=> {
-        this.longLoading = true
-      }, 5000)
+      this.longLoadingID = setTimeout(() => {
+        this.longLoading = true;
+      }, 5000);
       const response = await getTournamentsFromAICSWebPage();
-      clearTimeout(this.longLoadingID)
+      clearTimeout(this.longLoadingID);
       this.longLoading = false;
       this.longLoadingID = null;
       this.tournaments = response.data.data;
       this.httpRequestOnGoing = false;
     },
-    async fecthTournamentDetails(id:string){
+
+    //FETCH TOURNAMENT DETAILS
+    async fecthTournamentDetails(id: string) {
       this.tournamentDetails = undefined;
       this.httpRequestOnGoing = true;
-      this.longLoadingID = setTimeout(()=> {
-        this.longLoading = true
-      }, 5000)
-      const response = await getTournamentDetailFromAICSWebPage(id)
-      clearTimeout(this.longLoadingID)
+      this.longLoadingID = setTimeout(() => {
+        this.longLoading = true;
+      }, 5000);
+      const response = await getTournamentDetailFromAICSWebPage(id);
+      clearTimeout(this.longLoadingID);
       this.longLoading = false;
       this.longLoadingID = null;
       this.tournamentDetails = response.data.data;
       this.httpRequestOnGoing = false;
     },
-    async fecthStandings(id:string){
+
+    //FETCH STANDINGS
+    async fecthStandings(id: string) {
       this.teams = [];
       this.httpRequestOnGoing = true;
-      this.longLoadingID = setTimeout(()=> {
-        this.longLoading = true
-      }, 5000)
+      this.longLoadingID = setTimeout(() => {
+        this.longLoading = true;
+      }, 5000);
       const response = await getStandingsFromAICSWebPage(id);
-      clearTimeout(this.longLoadingID)
+      clearTimeout(this.longLoadingID);
       this.longLoading = false;
       this.longLoadingID = null;
-      this.teams = response.data.data.map((_:any) => {
-        return{
+      this.teams = response.data.data.map((_: any) => {
+        return {
           ..._,
-          goal: Number(_.points)
-        }
-      });;
-      this.httpRequestOnGoing = false;
-    },
-    async fetchPlayers(id:string){
-      this.players = []
-      this.httpRequestOnGoing = true;
-      this.longLoadingID = setTimeout(()=> {
-        this.longLoading = true
-      }, 5000)
-      const response = await getPlayersFromAICSWebPage(id);
-      clearTimeout(this.longLoadingID)
-      this.longLoading = false;
-      this.longLoadingID = null;
-      this.players = response.data.data.map((p:any) => {
-        return{
-          ...p,
-          goal: Number(p.goal)
-        }
+          goal: Number(_.points),
+        };
       });
       this.httpRequestOnGoing = false;
     },
-    async fetchMatchResults(id:string){
-      this.results = []
+
+    //FETCH PLAYERS
+    async fetchPlayers(id: string) {
+      this.players = [];
       this.httpRequestOnGoing = true;
-      this.longLoadingID = setTimeout(()=> {
-        this.longLoading = true
-      }, 5000)
+      this.longLoadingID = setTimeout(() => {
+        this.longLoading = true;
+      }, 5000);
+      const response = await getPlayersFromAICSWebPage(id);
+      clearTimeout(this.longLoadingID);
+      this.longLoading = false;
+      this.longLoadingID = null;
+      this.players = response.data.data.map((p: any) => {
+        return {
+          ...p,
+          goal: Number(p.goal),
+        };
+      });
+      this.httpRequestOnGoing = false;
+    },
+
+    //FETCH MATCH RESULTS
+    async fetchMatchResults(id: string) {
+      this.results = [];
+      this.httpRequestOnGoing = true;
+      this.longLoadingID = setTimeout(() => {
+        this.longLoading = true;
+      }, 5000);
       const response = await getMatchResults(id);
-      clearTimeout(this.longLoadingID)
+      clearTimeout(this.longLoadingID);
       this.longLoading = false;
       this.longLoadingID = null;
       this.results = response.data.data;
       this.httpRequestOnGoing = false;
-    }
+    },
+
+    //FETCH LATEST MATCH RESULTS
+    async fetchLatestMatchResults(id: string) {
+      this.latestMatchResults = [];
+      this.httpRequestOnGoing = true;
+      this.longLoadingID = setTimeout(() => {
+        this.longLoading = true;
+      }, 5000);
+      const response = await getLatestMatchResults(id);
+      clearTimeout(this.longLoadingID);
+      this.longLoading = false;
+      this.longLoadingID = null;
+      this.latestMatchResults = response.data.data;
+      this.httpRequestOnGoing = false;
+    },
+
+    //FETCH N MATCHESEXT
+    async fetchNextMatches(id: string) {
+      this.nextMatches = [];
+      this.httpRequestOnGoing = true;
+      this.longLoadingID = setTimeout(() => {
+        this.longLoading = true;
+      }, 5000);
+      const response = await getNextMatches(id);
+      clearTimeout(this.longLoadingID);
+      this.longLoading = false;
+      this.longLoadingID = null;
+      this.nextMatches = response.data.data;
+      this.httpRequestOnGoing = false;
+    },
   },
 });

@@ -51,10 +51,10 @@
         ></Button>
       </div>
 
-      <div v-if="results" class="border-1 p-3 surface-border surface-card">
-        <div class="text-2xl text-color border-bottom-1 surface-border pb-3">Prossime partite</div>
+      <div v-if="latestMatchResults.length" class="border-1 p-3 surface-border surface-card mb-3">
+        <div class="text-2xl text-color border-bottom-1 surface-border pb-3">Ultimi risultati</div>
 
-        <div v-for="item in results.values" class="border-bottom-1 surface-border p-2">
+        <div v-for="item in latestMatchResults" class="border-bottom-1 surface-border p-2">
           <div class="flex justify-content-between">
             <div class="text-color">
               {{ item.teamA }}
@@ -69,6 +69,27 @@
             </div>
             <div class="font-bold">
               {{ item.matchCompleted && item.scoreB || '-' }}
+            </div>
+          </div>
+          <small class="text-color-secondary">
+            {{ `${formatData(item.dateUtc)}, ${item.location}` }}
+          </small>
+        </div>
+      </div>
+
+
+      <div v-if="nextMatches.length" class="border-1 p-3 surface-border surface-card">
+        <div class="text-2xl text-color border-bottom-1 surface-border pb-3">Prossime partite</div>
+
+        <div v-for="item in nextMatches" class="border-bottom-1 surface-border p-2">
+          <div class="flex justify-content-between">
+            <div class="text-color">
+              {{ item.teamA }}
+            </div>
+          </div>
+          <div class="flex justify-content-between">
+            <div class="text-color">
+              {{ item.teamB }}
             </div>
           </div>
           <small class="text-color-secondary">
@@ -94,7 +115,7 @@ import router from "@/router";
 
 
 const store = useStore();
-const { tournamentDetails, players, teams, results } = storeToRefs(useStore());
+const { tournamentDetails, players, teams, results, latestMatchResults, nextMatches } = storeToRefs(useStore());
 
 const id = useRoute().params.id as string;
 
@@ -125,5 +146,7 @@ onBeforeMount(async () => {
   await store.fecthStandings(id);
   await store.fetchPlayers(id);
   await store.fetchMatchResults(id);
+  await store.fetchLatestMatchResults(id);
+  await store.fetchNextMatches(id);
 });
 </script>
