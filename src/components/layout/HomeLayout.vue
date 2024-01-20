@@ -50,6 +50,11 @@ const tabs = [
     label: "Marcatori",
     icon: ["fas", "people-group"],
   },
+  {
+    name: "DisciplinaryMeasurementsPage",
+    label: "Provv. Disciplinari",
+    icon: ["fas", "note-sticky"],
+  },
 ];
 
 

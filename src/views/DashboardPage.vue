@@ -5,10 +5,10 @@
     <template #header>
       <PageHeader :title="tournamentName" :show-back-button="true"></PageHeader>
     </template>
-    <div class="p-3 surface-ground">
+    <div class="surface-ground">
       <div
         v-if="firstTeam"
-        class="border-1 p-3 surface-border mb-3 surface-card"
+        class="p-3 mb-3 surface-card"
       >
         <div
           class="flex border-bottom-1 surface-border justify-content-between align-items-end mb-2 pb-2"
@@ -30,7 +30,7 @@
       </div>
       <div
         v-if="firstPlayer"
-        class="border-1 p-3 surface-border surface-card mb-3"
+        class="p-3 surface-card mb-3"
       >
         <div class="border-bottom-1 surface-border mb-2 pb-2">
           <div class="text-2xl text-color">1° marcatore</div>
@@ -51,7 +51,7 @@
         ></Button>
       </div>
 
-      <div v-if="latestMatchResults.length" class="border-1 p-3 surface-border surface-card mb-3">
+      <div v-if="latestMatchResults.length" class="p-3 surface-card mb-3">
         <div class="text-2xl text-color border-bottom-1 surface-border pb-3">Ultimi risultati</div>
 
         <div v-for="item in latestMatchResults" class="border-bottom-1 surface-border p-2">
@@ -78,7 +78,7 @@
       </div>
 
 
-      <div v-if="nextMatches.length" class="border-1 p-3 surface-border surface-card">
+      <div v-if="nextMatches.length" class="p-3 surface-card">
         <div class="text-2xl text-color border-bottom-1 surface-border pb-3">Prossime partite</div>
 
         <div v-for="item in nextMatches" class="border-bottom-1 surface-border p-2">
@@ -103,7 +103,6 @@
 
 <script lang="ts" setup>
 import TournamentPageTemplate from "@/components/layout/TournamentPageTemplate.vue";
-import TournamentRoot from "@/components/pages/tournament-ranking/TournamentRoot.vue";
 import PageHeader from "@/components/PageHeader.vue";
 import { storeToRefs } from "pinia";
 import { useStore } from "@/store/main";

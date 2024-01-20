@@ -36,3 +36,7 @@ export async function getLatestMatchResults(id:string){
 export async function getNextMatches(id:string){
   return await axios.get(`${baseurl}/tournaments/${id}/next-matches`)
 }
+
+export async function getDisciplinaryMeasurements(id:string){
+  return await axios.get(`${baseurl}/tournaments/${id}/disciplinary-measurements`)
+}

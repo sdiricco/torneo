@@ -2,7 +2,6 @@ import { defineStore } from "pinia";
 import { Preferences } from "@capacitor/preferences";
 import { setTheme } from "@/theme/utility";
 import { Network } from "@capacitor/network";
-import useTheme from "@/composables/useTheme";
 import {
   getPlayersFromAICSWebPage,
   getStandingsFromAICSWebPage,
@@ -11,6 +10,7 @@ import {
   getMatchResults,
   getLatestMatchResults,
   getNextMatches,
+  getDisciplinaryMeasurements
 } from "@/services/api";
 import { useRoute } from "vue-router";
 
@@ -33,6 +33,7 @@ interface IState {
   results: any;
   latestMatchResults: any[];
   nextMatches: any[];
+  disciplinaryMeasurements: any;
   longLoadingID: any;
   longLoading: boolean;
 }
@@ -54,6 +55,7 @@ export const useStore = defineStore({
     players: [],
     results: undefined,
     latestMatchResults: [],
+    disciplinaryMeasurements: [],
     nextMatches: [],
     longLoadingID: null,
     longLoading: false,
@@ -217,7 +219,7 @@ export const useStore = defineStore({
       this.httpRequestOnGoing = false;
     },
 
-    //FETCH N MATCHESEXT
+    //FETCH NEXT MATCHE
     async fetchNextMatches(id: string) {
       this.nextMatches = [];
       this.httpRequestOnGoing = true;
@@ -229,6 +231,21 @@ export const useStore = defineStore({
       this.longLoading = false;
       this.longLoadingID = null;
       this.nextMatches = response.data.data;
+      this.httpRequestOnGoing = false;
+    },
+
+    //FETCH NEXT MATCHE
+    async fetchDisciplinaryMeasurements(id: string) {
+      this.disciplinaryMeasurements = [];
+      this.httpRequestOnGoing = true;
+      this.longLoadingID = setTimeout(() => {
+        this.longLoading = true;
+      }, 5000);
+      const response = await getDisciplinaryMeasurements(id);
+      clearTimeout(this.longLoadingID);
+      this.longLoading = false;
+      this.longLoadingID = null;
+      this.disciplinaryMeasurements = response.data.data;
       this.httpRequestOnGoing = false;
     },
   },
