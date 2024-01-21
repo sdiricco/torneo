@@ -41,6 +41,11 @@ const routes: Array<RouteRecordRaw> = [
         component: playersRankingPage,
       },
       {
+        path: 'players',
+        name: 'PlayersPage',
+        component: playersRankingPage,
+      },
+      {
         path: 'disciplinary-measurements',
         name: 'DisciplinaryMeasurementsPage',
         component: DisciplinaryMeasurementsPage,
