@@ -4,7 +4,7 @@ import { setTheme } from "@/theme/utility";
 import { Network } from "@capacitor/network";
 import {
   getPlayersFromAICSWebPage,
-  getStandingsFromAICSWebPage,
+  getTeamsRankingFromAICSWebPage,
   getTournamentsFromAICSWebPage,
   getTournamentDetailFromAICSWebPage,
   getMatchResults,
@@ -156,7 +156,7 @@ export const useStore = defineStore({
       this.longLoadingID = setTimeout(() => {
         this.longLoading = true;
       }, 5000);
-      const response = await getStandingsFromAICSWebPage(id);
+      const response = await getTeamsRankingFromAICSWebPage(id);
       clearTimeout(this.longLoadingID);
       this.longLoading = false;
       this.longLoadingID = null;
