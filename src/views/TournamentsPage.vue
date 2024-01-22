@@ -4,7 +4,7 @@
       <PageHeader title="AICS Lucca - Campionati di calcio a 5"/>
     </template>
     <div class="p-4">
-      <WaitServer v-if="!tournaments.length" />
+      <WaitServer v-if="!tournaments.length || true" />
       <div v-else>
         <Accordion :multiple="true">
           <AccordionTab

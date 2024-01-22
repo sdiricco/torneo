@@ -8,7 +8,10 @@
     </div>
 
     <div class="text-4xl text-color mb-6">Mi sto connettendo al server</div>
-    <ProgressBar :value="progressBarValue" :mode="mode" style="height: 32px"></ProgressBar>
+
+    
+    <font-awesome-icon size="8x" :icon="['fas', 'futbol']" class="mb-6 text-color" spin />
+    <ProgressBar :value="progressBarValue" :mode="mode" style="height: 1.5rem"></ProgressBar>
   </div>
 </template>
 

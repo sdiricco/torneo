@@ -1,5 +1,5 @@
 <template>
-  <div class="p-3">
+  <div class="p-3 surface-ground">
     <div class="flex" style="align-items: baseline">
       <i
         v-if="showBackButton"
