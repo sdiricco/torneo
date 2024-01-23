@@ -12,7 +12,10 @@ import {
   getNextMatches,
   getDisciplinaryMeasurements
 } from "@/services/api";
+
+import * as api from "@/api/api"
 import { useRoute } from "vue-router";
+import { ITournamentDetails } from "@/api/interfaces";
 
 const route = useRoute();
 
@@ -27,12 +30,10 @@ interface IState {
     isDark: boolean;
   };
   tournaments: any[];
-  tournamentDetails: any;
+  tournamentDetails: ITournamentDetails | undefined;
   teams: any[];
   players: any[];
   results: any;
-  latestMatchResults: any[];
-  nextMatches: any[];
   disciplinaryMeasurements: any;
   longLoadingID: any;
   longLoading: boolean;
@@ -54,14 +55,16 @@ export const useStore = defineStore({
     teams: [],
     players: [],
     results: undefined,
-    latestMatchResults: [],
     disciplinaryMeasurements: [],
-    nextMatches: [],
     longLoadingID: null,
     longLoading: false,
   }),
   getters: {
     isDark: (state: any) => state.preferences.isDark,
+    getTournamentName: (state) => state.tournamentDetails?.name,
+    getTeamsRanking: (state) => state.tournamentDetails?.teamsRanking || [],
+    getLatestMatchResults: (state) => state.tournamentDetails?.latestMatches || [],
+    getNextMatches: (state) => state.tournamentDetails?.nextMatches || []
   },
   actions: {
     async toggleTheme(isDark: boolean) {
@@ -141,7 +144,7 @@ export const useStore = defineStore({
       this.longLoadingID = setTimeout(() => {
         this.longLoading = true;
       }, 5000);
-      const response = await getTournamentDetailFromAICSWebPage(id);
+      const response = await api.getTournamentDetails(id);
       clearTimeout(this.longLoadingID);
       this.longLoading = false;
       this.longLoadingID = null;
@@ -201,36 +204,6 @@ export const useStore = defineStore({
       this.longLoading = false;
       this.longLoadingID = null;
       this.results = response.data.data;
-      this.httpRequestOnGoing = false;
-    },
-
-    //FETCH LATEST MATCH RESULTS
-    async fetchLatestMatchResults(id: string) {
-      this.latestMatchResults = [];
-      this.httpRequestOnGoing = true;
-      this.longLoadingID = setTimeout(() => {
-        this.longLoading = true;
-      }, 5000);
-      const response = await getLatestMatchResults(id);
-      clearTimeout(this.longLoadingID);
-      this.longLoading = false;
-      this.longLoadingID = null;
-      this.latestMatchResults = response.data.data;
-      this.httpRequestOnGoing = false;
-    },
-
-    //FETCH NEXT MATCHE
-    async fetchNextMatches(id: string) {
-      this.nextMatches = [];
-      this.httpRequestOnGoing = true;
-      this.longLoadingID = setTimeout(() => {
-        this.longLoading = true;
-      }, 5000);
-      const response = await getNextMatches(id);
-      clearTimeout(this.longLoadingID);
-      this.longLoading = false;
-      this.longLoadingID = null;
-      this.nextMatches = response.data.data;
       this.httpRequestOnGoing = false;
     },
 

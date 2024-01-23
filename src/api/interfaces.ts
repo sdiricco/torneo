@@ -1,70 +1,78 @@
+export interface IApiResponse<T>{
+  status: string;
+  data: T
+}
 export interface ITournamentEntry {
-    name: string;
-    circolo: string;
-    location: string;
-    id: string;
+  name: string;
+  circolo: string;
+  location: string;
+  id: string;
 }
 
 export interface ITournamentDetails {
-    name: string;
-    circolo: string;
-    location: string;
-    id: string;
-    teamsRanking: ITeamRanking[];
-    latestMatches: ILatestMatchResult[];
-    nextMatches: INextMatchResult[]
+  name: string;
+  circolo: string;
+  location: string;
+  id: string;
+  teamsRanking: ITeamRanking[];
+  latestMatches: ILatestMatchResult[];
+  nextMatches: INextMatchResult[];
 }
 
 export interface ITeamRanking {
-    name: string;
-    points: string;
-    matches: string;
-    won_matches: string;
-    drawn_matches: string;
-    lost_matches: string;
-    goals_scored: string;
-    goals_conceded: string;
-    fair_play: string;
+  name: string;
+  points: string;
+  matches: string;
+  won_matches: string;
+  drawn_matches: string;
+  lost_matches: string;
+  goals_scored: string;
+  goals_conceded: string;
+  fair_play: string;
 }
 
 export interface IPlayerRanking {
-    firstName: string;
-    lastName: string;
-    team: string;
-    goal: string;
+  firstName: string;
+  lastName: string;
+  team: string;
+  goal: string;
 }
 
 export interface ILatestMatchResult {
-    week: string;
-    teamA: string;
-    teamB: string;
-    date: string;
-    time: string;
-    location: string;
+  week: string;
+  teamA: string;
+  teamB: string;
+  date: string;
+  time: string;
+  location: string;
+  dateUtc: string,
+  scoreA: string,
+  scoreB: string,
+  matchCompleted: boolean,
 }
 
 export interface INextMatchResult {
-    week: string;
-    teamA: string;
-    teamB: string;
-    date: string;
-    time: string;
-    location: string;
+  week: string;
+  teamA: string;
+  teamB: string;
+  date: string;
+  time: string;
+  location: string;
 }
 
 export interface IPlayersWarnings {
-    firstName: string;
-    lastName: string;
-    team: string;
-    number: string;
+  firstName: string;
+  lastName: string;
+  team: string;
+  number: string;
 }
 
 export interface IPlayerSpecialMeasure {
-    firstName: string;
-    lastName: string;
-    team: string;
-    number: string;
-    startDate: string;
-    endDate: string;
-    notes: string;
+  firstName: string;
+  lastName: string;
+  team: string;
+  number: string;
+  startDate: string;
+  endDate: string;
+  notes: string;
 }

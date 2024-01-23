@@ -6,7 +6,7 @@
       scrollable
       scrollHeight="flex"
       :class="`p-datatable-sm custom-table`"
-      :value="teams"
+      :value="getTeamsRanking"
       dataKey="name"
       stripedRows
     >
@@ -48,7 +48,7 @@ import { useStore } from "@/store/main";
 import { standingsLegend } from "@/constants";
 import { storeToRefs } from "pinia";
 
-const { teams } = storeToRefs(useStore());
+const { getTeamsRanking } = storeToRefs(useStore());
 </script>
 
 <style scoped>

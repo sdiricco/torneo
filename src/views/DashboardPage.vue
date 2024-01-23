@@ -51,10 +51,10 @@
         ></Button>
       </div>
 
-      <div v-if="latestMatchResults.length" class="p-3 surface-card mb-3">
+      <div v-if="getLatestMatchResults.length" class="p-3 surface-card mb-3">
         <div class="text-2xl text-color border-bottom-1 surface-border pb-3">Ultimi risultati</div>
 
-        <div v-for="item in latestMatchResults" class="border-bottom-1 surface-border p-2">
+        <div v-for="item in getLatestMatchResults" class="border-bottom-1 surface-border p-2">
           <div class="flex justify-content-between">
             <div class="text-color">
               {{ item.teamA }}
@@ -78,10 +78,10 @@
       </div>
 
 
-      <div v-if="nextMatches.length" class="p-3 surface-card">
+      <div v-if="getNextMatches.length" class="p-3 surface-card">
         <div class="text-2xl text-color border-bottom-1 surface-border pb-3">Prossime partite</div>
 
-        <div v-for="item in nextMatches" class="border-bottom-1 surface-border p-2">
+        <div v-for="item in getNextMatches" class="border-bottom-1 surface-border p-2">
           <div class="flex justify-content-between">
             <div class="text-color">
               {{ item.teamA }}
@@ -93,7 +93,7 @@
             </div>
           </div>
           <small class="text-color-secondary">
-            {{ `${formatData(item.dateUtc)}, ${item.location}` }}
+            {{ `${formatData(item.date)}, ${item.location}` }}
           </small>
         </div>
       </div>
@@ -112,18 +112,20 @@ import moment from "moment";
 import { useRoute } from "vue-router";
 import router from "@/router";
 
+const id = useRoute().params.id as string;
 
 const store = useStore();
-const { tournamentDetails, players, teams, results, latestMatchResults, nextMatches } = storeToRefs(useStore());
+const { tournamentDetails, players, getLatestMatchResults, getNextMatches, getTeamsRanking } = storeToRefs(useStore());
 
-const id = useRoute().params.id as string;
+
 
 const tournamentName = computed(
   () => tournamentDetails.value && tournamentDetails.value.name
 );
 
+
 const firstPlayer = computed(() => maxBy(players.value, "goal"));
-const firstTeam = computed(() => maxBy(teams.value, "points"));
+const firstTeam = computed(() => maxBy(getTeamsRanking.value, "points"));
 
 async function onRefresh() {
   await store.fecthStandings(id);
@@ -142,10 +144,7 @@ function clickGoToRankingPage(name:string){
 }
 
 onBeforeMount(async () => {
-  await store.fecthStandings(id);
+  await store.fecthTournamentDetails(id)
   await store.fetchPlayers(id);
-  await store.fetchMatchResults(id);
-  await store.fetchLatestMatchResults(id);
-  await store.fetchNextMatches(id);
 });
 </script>

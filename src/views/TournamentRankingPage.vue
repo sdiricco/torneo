@@ -3,7 +3,7 @@
 <template>
   <TournamentPageTemplate @refresh="onRefresh">
     <template #header>
-      <PageHeader :title="tournamentName" :show-back-button="true"></PageHeader>
+      <PageHeader :title="getTournamentName" :show-back-button="true"></PageHeader>
     </template>
     <TournamentRoot />
   </TournamentPageTemplate>
@@ -20,21 +20,13 @@ import { useRoute } from "vue-router";
 
 
 const store = useStore();
-const { tournamentDetails } = storeToRefs(useStore());
+const { getTournamentName } = storeToRefs(useStore());
 
 const id = useRoute().params.id as string
 
-const tournamentName = computed(
-  () => tournamentDetails.value && tournamentDetails.value.name
-);
-
 
 async function onRefresh(){
-  await store.fecthStandings(id)
+  await store.fecthTournamentDetails(id)
 }
-
-onBeforeMount(async()=> {
-  await store.fecthStandings(id)
-})
 
 </script>
