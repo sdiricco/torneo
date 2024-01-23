@@ -10,7 +10,9 @@ export interface ITournamentDetails {
     circolo: string;
     location: string;
     id: string;
-    teams: string[];
+    teamsRanking: ITeamRanking[];
+    latestMatches: ILatestMatchResult[];
+    nextMatches: INextMatchResult[]
 }
 
 export interface ITeamRanking {
@@ -48,4 +50,21 @@ export interface INextMatchResult {
     date: string;
     time: string;
     location: string;
+}
+
+export interface IPlayersWarnings {
+    firstName: string;
+    lastName: string;
+    team: string;
+    number: string;
+}
+
+export interface IPlayerSpecialMeasure {
+    firstName: string;
+    lastName: string;
+    team: string;
+    number: string;
+    startDate: string;
+    endDate: string;
+    notes: string;
 }
