@@ -1,43 +1,18 @@
 <template>
   <div class="surface-ground">
-    <div v-if="firstTeam" class="p-3 mb-3 surface-card">
-      <div
-        class="flex border-bottom-1 surface-border justify-content-between align-items-end mb-2 pb-2"
-      >
-        <div class="text-2xl text-color">1° campionato</div>
-      </div>
-      <div class="border-bottom-1 surface-border mb-2 pb-2">
-        <div class="text-xl text-color">{{ firstTeam.name }}</div>
-        <div class="font-bold">{{ `punti: ${firstTeam.points}` }}</div>
-      </div>
-      <Button
-        class="px-0 pb-0"
-        icon="pi pi-arrow-right"
-        iconPos="right"
-        label="Vai alla classifica completa"
-        link
-        @click="emit('goToRankingPage')"
-      ></Button>
-    </div>
-    <div v-if="firstPlayer" class="p-3 surface-card mb-3">
-      <div class="border-bottom-1 surface-border mb-2 pb-2">
-        <div class="text-2xl text-color">1° marcatore</div>
-      </div>
-      <div class="border-bottom-1 surface-border mb-2 pb-2">
-        <div class="text-xl text-color">
-          {{ `${firstPlayer.firstName} ${firstPlayer.lastName}` }}
-        </div>
-        <div class="font-bold">{{ `goal: ${firstPlayer.goal}` }}</div>
-      </div>
-      <Button
-        class="px-0 pb-0"
-        icon="pi pi-arrow-right"
-        iconPos="right"
-        label="Vai alla classifica marcatori"
-        link
-        @click="emit('goToPlayersPage')"
-      ></Button>
-    </div>
+    <FirstTeamSection
+      v-if="firstTeam"
+      :team="firstTeam"
+      @goToRankingPage="emit('goToRankingPage')"
+    />
+    <SkeletonCard v-else />
+    <FirstPlayerSection
+      v-if="firstPlayer"
+      :player="firstPlayer"
+      @goToPlayersPage="emit('goToPlayersPage')"
+    />
+    <SkeletonCard v-else/>
+
 
     <div v-if="getLatestMatchResults.length" class="p-3 surface-card mb-3">
       <div class="text-2xl text-color border-bottom-1 surface-border pb-3">
@@ -103,28 +78,27 @@ import { useStore } from "@/store/main";
 import { computed } from "vue";
 import { maxBy } from "lodash";
 import { DateTime } from "luxon";
-import {IPlayerRanking, ITeamRanking} from "@/api/interfaces"
+import { IPlayerRanking, ITeamRanking } from "@/api/interfaces";
+import FirstPlayerSection from "./FirstPlayerSection.vue";
+import FirstTeamSection from "./FirstTeamSection.vue";
+import SkeletonCard from "@/components/shared/SkeletonCard.vue"
 
-
-const {
-  playersStats,
-  getLatestMatchResults,
-  getNextMatches,
-  getTeamsRanking,
-} = storeToRefs(useStore());
+const { httpRequestOnGoing, playersStats, getLatestMatchResults, getNextMatches, getTeamsRanking } =
+  storeToRefs(useStore());
 
 const emit = defineEmits<{
-  (e: 'goToRankingPage'):void,
-  (e: 'goToPlayersPage'):void,
-}>()
+  (e: "goToRankingPage"): void;
+  (e: "goToPlayersPage"): void;
+}>();
 
-
-const firstTeam = computed(() => maxBy<ITeamRanking>(getTeamsRanking.value, "points"));
-const firstPlayer = computed(() => maxBy<IPlayerRanking>(playersStats.value, "goal"));
-
+const firstTeam = computed(() =>
+  maxBy<ITeamRanking>(getTeamsRanking.value, "points")
+);
+const firstPlayer = computed(() =>
+  maxBy<IPlayerRanking>(playersStats.value, "goal")
+);
 
 function formatData(dateUtc: string) {
-  return DateTime.fromISO(dateUtc).setLocale('it').toFormat('EEE dd/MM HH:mm')
+  return DateTime.fromISO(dateUtc).setLocale("it").toFormat("EEE dd/MM HH:mm");
 }
-
 </script>
