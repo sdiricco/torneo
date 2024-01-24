@@ -31,6 +31,23 @@ export interface ITeamRanking {
   fair_play: string;
 }
 
+
+export interface IPlayerStats {
+  firstName: string;
+  lastName: string;
+  team: string;
+  goal: string;
+  warningsCount?: number;
+  suspansion?: {
+    startDate: string;
+    weeks: string;
+  };
+  specialMeasure?: {
+    startDate: string,
+    endDate: string,
+    notes: string
+  }
+}
 export interface IPlayerRanking {
   firstName: string;
   lastName: string;
@@ -55,7 +72,7 @@ export interface INextMatchResult {
   week: string;
   teamA: string;
   teamB: string;
-  date: string;
+  dateUtc: string;
   time: string;
   location: string;
 }

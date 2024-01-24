@@ -18,9 +18,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from "vue";
 import {
-  IonApp,
   IonRouterOutlet,
   IonPage,
   IonTabBar,
@@ -49,12 +47,7 @@ const tabs = [
     name: "PlayersRankingPage",
     label: "Marcatori",
     icon: ["fas", "people-group"],
-  },
-  {
-    name: "DisciplinaryMeasurementsPage",
-    label: "Provv. Disciplinari",
-    icon: ["fas", "note-sticky"],
-  },
+  }
 ];
 
 

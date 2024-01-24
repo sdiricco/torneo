@@ -4,18 +4,14 @@ import { setTheme } from "@/theme/utility";
 import { Network } from "@capacitor/network";
 import {
   getPlayersFromAICSWebPage,
-  getTeamsRankingFromAICSWebPage,
   getTournamentsFromAICSWebPage,
-  getTournamentDetailFromAICSWebPage,
   getMatchResults,
-  getLatestMatchResults,
-  getNextMatches,
   getDisciplinaryMeasurements
 } from "@/services/api";
 
 import * as api from "@/api/api"
 import { useRoute } from "vue-router";
-import { ITournamentDetails } from "@/api/interfaces";
+import { ITournamentDetails, IPlayerStats, ITournamentEntry } from "@/api/interfaces";
 
 const route = useRoute();
 
@@ -29,10 +25,11 @@ interface IState {
   preferences: {
     isDark: boolean;
   };
-  tournaments: any[];
+  tournaments: ITournamentEntry[];
   tournamentDetails: ITournamentDetails | undefined;
+  playersStats: IPlayerStats[];
+
   teams: any[];
-  players: any[];
   results: any;
   disciplinaryMeasurements: any;
   longLoadingID: any;
@@ -52,8 +49,8 @@ export const useStore = defineStore({
     },
     tournaments: [],
     tournamentDetails: undefined,
+    playersStats: [],
     teams: [],
-    players: [],
     results: undefined,
     disciplinaryMeasurements: [],
     longLoadingID: null,
@@ -64,7 +61,7 @@ export const useStore = defineStore({
     getTournamentName: (state) => state.tournamentDetails?.name,
     getTeamsRanking: (state) => state.tournamentDetails?.teamsRanking || [],
     getLatestMatchResults: (state) => state.tournamentDetails?.latestMatches || [],
-    getNextMatches: (state) => state.tournamentDetails?.nextMatches || []
+    getNextMatches: (state) => state.tournamentDetails?.nextMatches || [],
   },
   actions: {
     async toggleTheme(isDark: boolean) {
@@ -129,11 +126,11 @@ export const useStore = defineStore({
       this.longLoadingID = setTimeout(() => {
         this.longLoading = true;
       }, 5000);
-      const response = await getTournamentsFromAICSWebPage();
+      const response = await api.getTournaments();
+      this.tournaments = response.data.data;
       clearTimeout(this.longLoadingID);
       this.longLoading = false;
       this.longLoadingID = null;
-      this.tournaments = response.data.data;
       this.httpRequestOnGoing = false;
     },
 
@@ -145,50 +142,26 @@ export const useStore = defineStore({
         this.longLoading = true;
       }, 5000);
       const response = await api.getTournamentDetails(id);
-      clearTimeout(this.longLoadingID);
-      this.longLoading = false;
-      this.longLoadingID = null;
       this.tournamentDetails = response.data.data;
-      this.httpRequestOnGoing = false;
-    },
-
-    //FETCH STANDINGS
-    async fecthStandings(id: string) {
-      this.teams = [];
-      this.httpRequestOnGoing = true;
-      this.longLoadingID = setTimeout(() => {
-        this.longLoading = true;
-      }, 5000);
-      const response = await getTeamsRankingFromAICSWebPage(id);
       clearTimeout(this.longLoadingID);
       this.longLoading = false;
       this.longLoadingID = null;
-      this.teams = response.data.data.map((_: any) => {
-        return {
-          ..._,
-          goal: Number(_.points),
-        };
-      });
       this.httpRequestOnGoing = false;
     },
 
     //FETCH PLAYERS
     async fetchPlayers(id: string) {
-      this.players = [];
+      this.playersStats = [];
       this.httpRequestOnGoing = true;
       this.longLoadingID = setTimeout(() => {
         this.longLoading = true;
       }, 5000);
-      const response = await getPlayersFromAICSWebPage(id);
+      const response = await api.getPlayersStats(id);
+      this.playersStats = response.data.data
+
       clearTimeout(this.longLoadingID);
       this.longLoading = false;
       this.longLoadingID = null;
-      this.players = response.data.data.map((p: any) => {
-        return {
-          ...p,
-          goal: Number(p.goal),
-        };
-      });
       this.httpRequestOnGoing = false;
     },
 
@@ -204,21 +177,6 @@ export const useStore = defineStore({
       this.longLoading = false;
       this.longLoadingID = null;
       this.results = response.data.data;
-      this.httpRequestOnGoing = false;
-    },
-
-    //FETCH NEXT MATCHE
-    async fetchDisciplinaryMeasurements(id: string) {
-      this.disciplinaryMeasurements = [];
-      this.httpRequestOnGoing = true;
-      this.longLoadingID = setTimeout(() => {
-        this.longLoading = true;
-      }, 5000);
-      const response = await getDisciplinaryMeasurements(id);
-      clearTimeout(this.longLoadingID);
-      this.longLoading = false;
-      this.longLoadingID = null;
-      this.disciplinaryMeasurements = response.data.data;
       this.httpRequestOnGoing = false;
     },
   },

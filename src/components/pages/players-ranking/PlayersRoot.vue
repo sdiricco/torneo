@@ -4,7 +4,7 @@
       scrollable
       scrollHeight="flex"
       :class="`p-datatable-sm custom-table`"
-      :value="players"
+      :value="playersStats"
       dataKey="team"
       stripedRows
     >
@@ -23,6 +23,8 @@
         style="width: 180px; max-width: 180px"
         class="white-space-nowrap overflow-x-hidden text-overflow-ellipsis"
       ></Column>
+      <Column field="warningsCount" sortable header="W" class="font-bold"></Column>
+
     </DataTable>
   </div>
 </template>
@@ -30,7 +32,8 @@
 import { useStore } from "@/store/main";
 import {storeToRefs} from "pinia"
 
-const {players} =storeToRefs(useStore())
+const {playersStats} =storeToRefs(useStore())
+
 </script>
 
 <style scoped>
