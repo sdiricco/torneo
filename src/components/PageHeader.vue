@@ -1,15 +1,15 @@
 <template>
-  <div class="p-4 surface-ground">
+  <div class="surface-ground">
     <div class="flex" style="align-items: baseline">
-      <i v-if="showBackButton" class="pr-2 pi pi-arrow-left cursor-pointer" @click="onBack"></i>
-      <div class="text-color text-xl text-overflow-ellipsis overflow-x-hidden white-space-nowrap px-3">
-        {{ title }}
+      <Button v-if="showBackButton" icon="pi pi-arrow-left" text rounded severity="secondary" @click="onBack" class="ml-4" />
+      <div class="p-4 text-color text-xl text-overflow-ellipsis overflow-x-hidden white-space-nowrap px-3">
+        {{ title || '-' }}
       </div>
       <Button v-if="false" text rounded type="button" icon="pi pi-ellipsis-v" @click="toggle" aria-haspopup="true" aria-controls="overlay_menu" />
       <Menu ref="menu" id="overlay_menu" :model="items" :popup="true" />
     </div>
   </div>
-  <ion-progress-bar type="indeterminate" v-if="store.getIsLoading"></ion-progress-bar>
+  <ion-progress-bar type="indeterminate" v-if="store.isLoadingDebounced"></ion-progress-bar>
 </template>
 
 <script lang="ts" setup>
@@ -49,5 +49,4 @@ const toggle = (event: any) => {
 };
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>

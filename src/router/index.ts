@@ -3,16 +3,22 @@ import { RouteRecordRaw } from 'vue-router';
 
 const tournamentsPage = () => import('@/views/TournamentsPage.vue')
 const tournamentHomePage = () => import('@/views/TournamentHome.vue')
-const tournamentDashboard = () => import('@/views/DashboardPage.vue')
+const tournamentDashboardPage = () => import('@/views/TournamentDashboardPage.vue')
 const tournamentRankingsPage = () => import('@/views/TournamentRankingPage.vue')
-const playersStatsPage = () => import('@/views/PlayersRankingPage.vue')
+const playersStatsPage = () => import('@/views/PlayersStatsPage.vue')
 const tournamentCalendarPage = () => import('@/views/TournamentCalendarPage.vue')
+const OnBoardingPage = () => import('@/views/OnBoardingPage.vue')
 
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
     name: 'RootPage',
-    redirect: '/tournaments'
+    redirect: '/onboarding'
+  },
+  {
+    path: '/onboarding',
+    name: 'OnBoardingPage',
+    component: OnBoardingPage
   },
   {
     path: '/tournaments',
@@ -28,7 +34,7 @@ const routes: Array<RouteRecordRaw> = [
       {
         path: 'dashboard',
         name: 'TournamentDashboard',
-        component: tournamentDashboard,
+        component: tournamentDashboardPage,
       },
       {
         path: 'tournament-ranking',

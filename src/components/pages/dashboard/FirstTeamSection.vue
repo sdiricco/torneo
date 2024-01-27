@@ -26,7 +26,7 @@ interface Props {
   team: ITeamRanking;
 }
 
-const props = defineProps<Props>()
+defineProps<Props>()
 
 const emit = defineEmits(['goToRankingPage'])
 </script>

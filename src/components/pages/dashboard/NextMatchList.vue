@@ -7,19 +7,13 @@
           {{ item.teamA }}
         </div>
       </div>
-      <div class="font-bold">
-        {{ item.scoreA }}
-      </div>
     </div>
-    <div class="flex justify-content-between mb-1">
+    <div class="flex justify-content-between">
       <div class="flex align-items-center">
         <font-awesome-icon :icon="['fas', 'shirt']" class="mr-2" />
         <div class="text-color">
           {{ item.teamB }}
         </div>
-      </div>
-      <div class="font-bold">
-        {{ item.scoreB }}
       </div>
     </div>
     <small class="text-color-secondary">
@@ -29,11 +23,11 @@
 </template>
 
 <script lang="ts" setup>
-import { ILatestMatchResult } from "@/api/interfaces";
+import { INextMatchResult } from "@/api/interfaces";
 import { formatDate } from "@/utils/date";
 
 interface Props {
-  matchList: ILatestMatchResult[];
+  matchList: INextMatchResult[];
 }
 
 defineProps<Props>();

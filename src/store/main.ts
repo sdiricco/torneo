@@ -7,7 +7,6 @@ import { Network } from "@capacitor/network";
 import * as api from "@/api/api"
 import { ITournamentDetails, IPlayerStats, ITournamentEntry, ICalendar } from "@/api/interfaces";
 
-
 interface IState {
   httpRequestOnGoing: boolean;
   appVersion: string;
@@ -21,6 +20,7 @@ interface IState {
 
   longLoadingID: any;
   longLoading: boolean;
+  isLoadingDebounced: boolean;
 
   //tournament specific
   tournaments: ITournamentEntry[];
@@ -56,6 +56,7 @@ export const useStore = defineStore({
     tournamentDetails: undefined,
     playersStats: [],
     tournamentCalendar: undefined,
+    isLoadingDebounced: false,
 
     loading: {
       fetchTournaments: false,
@@ -66,13 +67,13 @@ export const useStore = defineStore({
 
   }),
   getters: {
-    isDark: (state: any) => state.preferences.isDark,
+    isDark: (state) => state.preferences.isDark,
     getTournamentName: (state) => state.tournamentDetails?.name,
     getTeamsRanking: (state) => state.tournamentDetails?.teamsRanking || [],
     getLatestMatchResults: (state) => state.tournamentDetails?.latestMatches || [],
     getNextMatches: (state) => state.tournamentDetails?.nextMatches || [],
     getTournamentCalendarValues: (state) => state.tournamentCalendar?.values || [],
-    getIsLoading: (state) => Object.values(state.loading).some(item => item)
+    getIsLoading: (state) => Object.values(state.loading).some(item => item),
   },
   actions: {
     async toggleTheme(isDark: boolean) {
