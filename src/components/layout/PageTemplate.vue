@@ -1,9 +1,9 @@
 <template>
-  <div class="h-screen overflow-hidden">
+  <div class="h-full overflow-hidden flex flex-column">
     <div ref="elRefHeader" class="border-bottom-2 surface-border">
       <slot name="header" />
     </div>
-    <div class="overflow-y-auto" :style="{height: contentHeight}">
+    <div class="overflow-y-auto overflow-x-hidden h-full">
       <slot />
     </div>
     <div ref="elRefFooter" class="sticky bottom-0">
