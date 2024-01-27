@@ -1,5 +1,3 @@
-/* eslint-disable */
-
 <template>
   <TabMenu
     :active-index="activeItemIdx"
@@ -7,11 +5,11 @@
     :model="items"
     :pt="{
       menu: {
-        class: 'surface-ground justify-content-center',
+        class: 'bg-primary-50 justify-content-center',
       },
     }">
     <template #item="{ item, props }">
-      <a v-ripple v-bind="props.action" class="flex flex-column align-items-center gap-2 surface-ground">
+      <a v-ripple v-bind="props.action" class="flex flex-column align-items-center gap-2 bg-primary-50">
         <font-awesome-icon :icon="item.icon" />
         <span v-bind="props.label">{{ item.label }}</span>
       </a>

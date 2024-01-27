@@ -1,5 +1,5 @@
 <template>
-  <div class="card pb-4">
+  <div class="pb-4">
     <DataTable
       scrollable
       scrollHeight="flex"
