@@ -1,6 +1,7 @@
 <template>
   <ion-page>
     <ion-tabs>
+      <WaitServer v-if="longLoading" />
       <ion-router-outlet></ion-router-outlet>
       <ion-tab-bar slot="bottom" >
         <ion-tab-button
@@ -28,6 +29,10 @@ import {
 } from "@ionic/vue";
 import { useRoute } from "vue-router";
 import router from "@/router";
+import WaitServer from "@/components/pages/tournaments/WaitServer.vue"
+import { useStore } from "@/store/main";
+import { storeToRefs } from "pinia";
+const {longLoading } = storeToRefs(useStore());
 
 const route = useRoute();
 const id = route.params.id;

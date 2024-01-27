@@ -1,40 +1,26 @@
 <template>
-  <div class="text-center mt-4">
-    <div class="flex align-items-center justify-content-center mb-2">
-      <div class="font-bold text-color-secondary mr-2">
-        L'attesa stimata è di circa 30 secondi
+  <Dialog
+    :visible="true"
+    modal
+    :show-header="false"
+    :style="{ width: '25rem' }"
+    :pt="{
+      content: {
+        class: 'border-round',
+      },
+    }">
+    <div class="text-center mt-4">
+      <div class="flex align-items-center justify-content-center mb-2">
+        <div class="font-bold text-color-secondary mr-2">L'attesa stimata è di circa 30 secondi</div>
       </div>
-      <i class="pi pi-exclamation-circle text-color-secondary"></i>
+
+      <div class="text-4xl text-color mb-6">Mi sto connettendo al server</div>
+
+      <font-awesome-icon size="8x" :icon="['fas', 'futbol']" class="mb-6 text-color" spin />
     </div>
-
-    <div class="text-4xl text-color mb-6">Mi sto connettendo al server</div>
-
-    
-    <font-awesome-icon size="8x" :icon="['fas', 'futbol']" class="mb-6 text-color" spin />
-    <ProgressBar :value="progressBarValue" :mode="mode" style="height: 1.5rem"></ProgressBar>
-  </div>
+  </Dialog>
 </template>
 
-<script lang="ts" setup>
-import { ref, onMounted, onBeforeUnmount, computed } from "vue";
-
-let intervalId: any = null;
-let progressBarValue = ref(0);
-let indeterminate = ref(false);
-
-const mode = computed(() => indeterminate.value ? 'indeterminate' : 'determinate')
-
-onMounted(() => {
-  intervalId = setInterval(() => {
-    progressBarValue.value = progressBarValue.value < 100 ? progressBarValue.value + 1 : 100;
-    indeterminate.value = progressBarValue.value >= 100 ? true : false;
-  }, 500);
-});
-
-onBeforeUnmount(() => {
-  clearInterval(intervalId);
-  progressBarValue.value = 0;
-});
-</script>
+<script lang="ts" setup></script>
 
 <style scoped></style>

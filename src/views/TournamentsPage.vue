@@ -4,8 +4,7 @@
       <PageHeader title="AICS Lucca - Campionati di calcio a 5"/>
     </template>
     <div class="p-4">
-      <WaitServer v-if="!tournaments.length" />
-      <TournamentsRoot v-else @select:tournament="onSelectTournament" />
+      <TournamentsRoot @select:tournament="onSelectTournament" />
     </div>
   </TournamentsPageTemplate>
 </template>
@@ -21,7 +20,7 @@ import PageHeader from "@/components/PageHeader.vue"
 import TournamentsRoot from "@/components/pages/tournaments/TournamentsRoot.vue";
 
 const mainStore = useStore();
-const { tournaments } = storeToRefs(mainStore);
+const { tournaments, longLoading } = storeToRefs(mainStore);
 
 function onSelectTournament(id:number){
   router.push({ name: "TournamentHome", params: { id } });
