@@ -1,6 +1,5 @@
 <template>
-  <ion-page>
-    <ion-content :fullscreen="true">
+
       <div class="surface-ground p-4 h-full flex align-items-center justify-content-center">
         <div class="flex align-items-center justify-content-center">
           <Card>
@@ -12,8 +11,7 @@
           </Card>
         </div>
       </div>
-    </ion-content>
-  </ion-page>
+
 </template>
 
 <script setup lang="ts">

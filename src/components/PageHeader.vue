@@ -8,13 +8,12 @@
       <Button v-if="false" text rounded type="button" icon="pi pi-ellipsis-v" @click="toggle" aria-haspopup="true" aria-controls="overlay_menu" />
       <Menu ref="menu" id="overlay_menu" :model="items" :popup="true" />
     </div>
+    <ProgressBar v-if="store.isLoadingDebounced" mode="indeterminate" style="height: 5px" class="border-noround sticky bottom-0"></ProgressBar>
   </div>
-  <ion-progress-bar type="indeterminate" v-if="store.isLoadingDebounced"></ion-progress-bar>
 </template>
 
 <script lang="ts" setup>
 import { ref } from "vue";
-import { IonProgressBar } from "@ionic/vue";
 
 import { useStore } from "@/store/main";
 import router from "@/router";

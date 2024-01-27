@@ -1,13 +1,8 @@
 <template>
-  <ion-app>
-
-    <ion-router-outlet></ion-router-outlet>
-
-  </ion-app>
+  <RouterView></RouterView>
 </template>
 
 <script setup lang="ts">
-import { IonApp, IonRouterOutlet, } from "@ionic/vue";
 import { watch } from "vue";
 import { storeToRefs } from "pinia";
 import { useStore } from "@/store/main";
