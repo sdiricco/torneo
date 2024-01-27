@@ -1,6 +1,6 @@
 <template>
   <ion-page>
-    <ion-header>
+    <ion-header mode="md">
       <slot name="header" />
     </ion-header>
     <ion-content :fullscreen="true">

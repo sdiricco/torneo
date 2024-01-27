@@ -2,18 +2,11 @@ import { defineStore } from "pinia";
 import { Preferences } from "@capacitor/preferences";
 import { setTheme } from "@/theme/utility";
 import { Network } from "@capacitor/network";
-import {
-  getPlayersFromAICSWebPage,
-  getTournamentsFromAICSWebPage,
-  getMatchResults,
-  getDisciplinaryMeasurements
-} from "@/services/api";
+
 
 import * as api from "@/api/api"
-import { useRoute } from "vue-router";
-import { ITournamentDetails, IPlayerStats, ITournamentEntry } from "@/api/interfaces";
+import { ITournamentDetails, IPlayerStats, ITournamentEntry, ICalendar } from "@/api/interfaces";
 
-const route = useRoute();
 
 interface IState {
   httpRequestOnGoing: boolean;
@@ -25,15 +18,23 @@ interface IState {
   preferences: {
     isDark: boolean;
   };
+
+  longLoadingID: any;
+  longLoading: boolean;
+
+  //tournament specific
   tournaments: ITournamentEntry[];
   tournamentDetails: ITournamentDetails | undefined;
   playersStats: IPlayerStats[];
+  tournamentCalendar: ICalendar | undefined;
 
-  teams: any[];
-  results: any;
-  disciplinaryMeasurements: any;
-  longLoadingID: any;
-  longLoading: boolean;
+  loading: {
+    fetchTournaments: boolean;
+    fetchTournamentDetails: boolean;
+    fetchTournamentPlayersStats: boolean;
+    fetchTournamentCalender: boolean;
+  }
+
 }
 export const useStore = defineStore({
   id: "store",
@@ -47,14 +48,22 @@ export const useStore = defineStore({
     preferences: {
       isDark: false,
     },
+
+    longLoadingID: null,
+    longLoading: false,
+
     tournaments: [],
     tournamentDetails: undefined,
     playersStats: [],
-    teams: [],
-    results: undefined,
-    disciplinaryMeasurements: [],
-    longLoadingID: null,
-    longLoading: false,
+    tournamentCalendar: undefined,
+
+    loading: {
+      fetchTournaments: false,
+      fetchTournamentDetails: false,
+      fetchTournamentPlayersStats: false,
+      fetchTournamentCalender: false,
+    }
+
   }),
   getters: {
     isDark: (state: any) => state.preferences.isDark,
@@ -62,6 +71,8 @@ export const useStore = defineStore({
     getTeamsRanking: (state) => state.tournamentDetails?.teamsRanking || [],
     getLatestMatchResults: (state) => state.tournamentDetails?.latestMatches || [],
     getNextMatches: (state) => state.tournamentDetails?.nextMatches || [],
+    getTournamentCalendarValues: (state) => state.tournamentCalendar?.values || [],
+    getIsLoading: (state) => Object.values(state.loading).some(item => item)
   },
   actions: {
     async toggleTheme(isDark: boolean) {
@@ -119,65 +130,40 @@ export const useStore = defineStore({
       await Preferences.clear();
     },
 
-    //FETCH TOURNAMENTS
+    /***********************************************************************************************
+     * Tournament specific
+     ***********************************************************************************************/
+
+    //Fetch list of tournaments
     async fecthTournaments() {
-      this.tournaments = [];
-      this.httpRequestOnGoing = true;
-      this.longLoadingID = setTimeout(() => {
-        this.longLoading = true;
-      }, 5000);
+      this.loading.fetchTournaments = true;
       const response = await api.getTournaments();
       this.tournaments = response.data.data;
-      clearTimeout(this.longLoadingID);
-      this.longLoading = false;
-      this.longLoadingID = null;
-      this.httpRequestOnGoing = false;
+      this.loading.fetchTournaments = false;
     },
 
-    //FETCH TOURNAMENT DETAILS
+    //fetch tournament details
     async fecthTournamentDetails(id: string) {
-      this.tournamentDetails = undefined;
-      this.httpRequestOnGoing = true;
-      this.longLoadingID = setTimeout(() => {
-        this.longLoading = true;
-      }, 5000);
+      this.loading.fetchTournamentDetails = true;
       const response = await api.getTournamentDetails(id);
       this.tournamentDetails = response.data.data;
-      clearTimeout(this.longLoadingID);
-      this.longLoading = false;
-      this.longLoadingID = null;
-      this.httpRequestOnGoing = false;
+      this.loading.fetchTournamentDetails = false;
     },
 
-    //FETCH PLAYERS
+    //fetch players of tournament
     async fetchPlayers(id: string) {
-      this.playersStats = [];
-      this.httpRequestOnGoing = true;
-      this.longLoadingID = setTimeout(() => {
-        this.longLoading = true;
-      }, 5000);
+      this.loading.fetchTournamentPlayersStats = true;
       const response = await api.getPlayersStats(id);
       this.playersStats = response.data.data
-
-      clearTimeout(this.longLoadingID);
-      this.longLoading = false;
-      this.longLoadingID = null;
-      this.httpRequestOnGoing = false;
+      this.loading.fetchTournamentPlayersStats = false;
     },
 
-    //FETCH MATCH RESULTS
-    async fetchMatchResults(id: string) {
-      this.results = [];
-      this.httpRequestOnGoing = true;
-      this.longLoadingID = setTimeout(() => {
-        this.longLoading = true;
-      }, 5000);
-      const response = await getMatchResults(id);
-      clearTimeout(this.longLoadingID);
-      this.longLoading = false;
-      this.longLoadingID = null;
-      this.results = response.data.data;
-      this.httpRequestOnGoing = false;
+    //fetch tournament calendar
+    async fetchTournamentCalendar(id: string, week?:number) {
+      this.loading.fetchTournamentCalender = true;
+      const response = await api.getTournamentCalendar(id, week);
+      this.tournamentCalendar = response.data.data;
+      this.loading.fetchTournamentCalender = false;
     },
   },
 });

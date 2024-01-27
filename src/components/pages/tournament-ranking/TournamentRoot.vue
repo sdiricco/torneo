@@ -1,11 +1,9 @@
-/* eslint-disable */
-
 <template>
   <div class="card pb-4">
     <DataTable
       scrollable
       scrollHeight="flex"
-      :class="`p-datatable-sm custom-table`"
+      class="w-full"
       :value="getTeamsRanking"
       dataKey="name"
       stripedRows
@@ -52,17 +50,4 @@ const { getTeamsRanking } = storeToRefs(useStore());
 </script>
 
 <style scoped>
-.custom-table :deep(.p-datatable-tbody > tr > td) {
-  padding: 6px;
-}
-
-.custom-table {
-  width: 100%;
-  height: min-content;
-}
-
-.card {
-  display: flex;
-  height: min-content;
-}
 </style>

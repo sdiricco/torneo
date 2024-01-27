@@ -44,9 +44,14 @@ const tabs = [
     icon: ["fas", "trophy"],
   },
   {
-    name: "PlayersRankingPage",
-    label: "Marcatori",
+    name: "PlayersStatsPage",
+    label: "Giocatori",
     icon: ["fas", "people-group"],
+  },
+  {
+    name: "CalendarPage",
+    label: "Giornate",
+    icon: ["fas", "calendar"],
   }
 ];
 

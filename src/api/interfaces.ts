@@ -19,6 +19,22 @@ export interface ITournamentDetails {
   nextMatches: INextMatchResult[];
 }
 
+export interface ICalendar{
+  values: {
+    teamA: string;
+    teamB: string;
+    score: string;
+    date: string;
+    time: string;
+    dateUtc: string;
+    scoreA: number;
+    scoreB:number;
+  }[];
+  week: number;
+  weekCount: number;
+  matchPerWeek: number;
+}
+
 export interface ITeamRanking {
   name: string;
   points: string;

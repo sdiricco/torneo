@@ -89,6 +89,7 @@ import Textarea from "primevue/textarea";
 import ToggleButton from "primevue/togglebutton";
 import Toast from "primevue/toast";
 import ToastService from "primevue/toastservice";
+import Paginator from 'primevue/paginator';
 import ProgressSpinner from "primevue/progressspinner";
 /*****************************************************************************/
 /* PRIME VUE IMPORT DIRECTIVE */
@@ -122,11 +123,12 @@ import {
   faShirt,
   faChevronRight,
   faHome,
-  faNoteSticky
+  faNoteSticky,
+  faCalendar,
 } from "@fortawesome/free-solid-svg-icons";
 
 /* add icons to the library */
-library.add(faUserSecret, faSatelliteDish, faMoon, faSun, faWifi, faMagnifyingGlass, faCircleXmark, faTrophy, faFutbol, faPeopleGroup, faShirt, faChevronRight, faHome, faNoteSticky, faFutbol);
+library.add(faUserSecret, faSatelliteDish, faMoon, faSun, faWifi, faMagnifyingGlass, faCircleXmark, faTrophy, faFutbol, faPeopleGroup, faShirt, faChevronRight, faHome, faNoteSticky, faFutbol, faCalendar, faShirt);
 
 const pinia = createPinia();
 
@@ -191,6 +193,7 @@ app.component("Textarea", Textarea);
 app.component("ToggleButton", ToggleButton);
 app.component("Toast", Toast);
 app.component("ProgressSpinner", ProgressSpinner);
+app.component("Paginator", Paginator);
 
 /*****************************************************************************/
 /* PRIME VUE - DIRECTIVE */

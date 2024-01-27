@@ -5,8 +5,8 @@ const tournamentsPage = () => import('@/views/TournamentsPage.vue')
 const tournamentHomePage = () => import('@/views/TournamentHome.vue')
 const tournamentDashboard = () => import('@/views/DashboardPage.vue')
 const tournamentRankingsPage = () => import('@/views/TournamentRankingPage.vue')
-const playersRankingPage = () => import('@/views/PlayersRankingPage.vue')
-const DisciplinaryMeasurementsPage = () => import('@/views/DisciplinaryMeasurementsPage.vue')
+const playersStatsPage = () => import('@/views/PlayersRankingPage.vue')
+const tournamentCalendarPage = () => import('@/views/TournamentCalendarPage.vue')
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -36,20 +36,15 @@ const routes: Array<RouteRecordRaw> = [
         component: tournamentRankingsPage,
       },
       {
-        path: 'players-ranking',
-        name: 'PlayersRankingPage',
-        component: playersRankingPage,
-      },
-      {
         path: 'players',
-        name: 'PlayersPage',
-        component: playersRankingPage,
+        name: 'PlayersStatsPage',
+        component: playersStatsPage,
       },
       {
-        path: 'disciplinary-measurements',
-        name: 'DisciplinaryMeasurementsPage',
-        component: DisciplinaryMeasurementsPage,
-      }
+        path: 'calendar',
+        name: 'CalendarPage',
+        component: tournamentCalendarPage,
+      },
     ]
   },
 ]

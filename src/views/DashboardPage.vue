@@ -36,7 +36,7 @@ async function onRefresh() {
 }
 
 function goToPlayersPage() {
-  router.push({ name: "PlayersRankingPage", params: { id } });
+  router.push({ name: "PlayersStatsPage", params: { id } });
 }
 
 function goToRankingPage() {
