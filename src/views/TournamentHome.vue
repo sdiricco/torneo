@@ -1,7 +1,7 @@
 <template>
   <PageTemplate>
     <template #header>
-      <PageHeader :title="getTournamentName" :show-back-button="true"></PageHeader>
+      <PageHeader :title="getTournamentName" :show-back-button="true" :show-menu-button="true"></PageHeader>
     </template>
     <WaitServer v-if="longLoading"></WaitServer>
     <RouterView></RouterView>

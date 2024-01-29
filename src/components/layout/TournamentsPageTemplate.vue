@@ -14,4 +14,5 @@ import { useStore } from "@/store/main";
 import { storeToRefs } from "pinia";
 import PageTemplate from "./PageTemplate.vue";
 const { longLoading } = storeToRefs(useStore());
+
 </script>

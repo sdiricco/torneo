@@ -1,22 +1,37 @@
 <template>
-  <div class="flex" style="align-items: baseline">
-    <Button v-if="showBackButton" icon="pi pi-arrow-left" text rounded severity="secondary" @click="onBack" class="ml-4" />
-    <div class="p-4 text-color text-xl text-overflow-ellipsis overflow-x-hidden white-space-nowrap px-3">
-      {{ title || "-" }}
+  <div class="grid grid-nogutter align-items-center p-2">
+    <div class="col">
+      <Button v-if="showBackButton" icon="pi pi-arrow-left" text rounded severity="secondary" @click="onBack" />
     </div>
-    <Button v-if="false" text rounded type="button" icon="pi pi-ellipsis-v" @click="toggle" aria-haspopup="true" aria-controls="overlay_menu" />
-    <Menu ref="menu" id="overlay_menu" :model="items" :popup="true" />
+    <div class="col-9">
+      <div class="text-color font-bold text-overflow-ellipsis overflow-hidden white-space-nowrap">
+        {{ title || " " }}
+      </div>
+    </div>
+    <div class="col flex justify-content-end">
+        <Button
+          v-if="showMenuButton"
+          text
+          rounded
+          severity="secondary"
+          type="button"
+          icon="pi pi-ellipsis-v"
+          @click="toggle"
+          aria-haspopup="true"
+          aria-controls="overlay_menu" />
+        <Menu ref="menu" id="overlay_menu" :model="items" :popup="true" />
+    </div>
   </div>
   <ProgressBar v-if="store.isLoadingDebounced" mode="indeterminate" style="height: 5px" class="border-noround sticky bottom-0"></ProgressBar>
 </template>
 
 <script lang="ts" setup>
 import { ref } from "vue";
-
+import type { MenuItem } from "primevue/menuitem";
 import { useStore } from "@/store/main";
 import router from "@/router";
 
-defineProps(["title", "showBackButton"]);
+defineProps(["title", "showBackButton", "showMenuButton"]);
 
 const store = useStore();
 
@@ -25,19 +40,13 @@ function onBack() {
 }
 
 const menu = ref();
-const items = ref([
+const items = ref<MenuItem[]>([
   {
-    label: "Options",
-    items: [
-      {
-        label: "Refresh",
-        icon: "pi pi-refresh",
-      },
-      {
-        label: "Export",
-        icon: "pi pi-upload",
-      },
-    ],
+    label: "Informazioni",
+    icon: "pi pi-info-circle",
+    command: () => {
+      router.push({ name: "InfoPage" });
+    },
   },
 ]);
 

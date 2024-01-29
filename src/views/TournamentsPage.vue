@@ -1,7 +1,7 @@
 <template>
   <TournamentsPageTemplate>
     <template #header>
-      <PageHeader title="AICS Lucca - Campionati di calcio a 5"/>
+      <PageHeader title="AICS Lucca - Campionati di calcio a 5" :show-menu-button="true"/>
     </template>
     <div class="p-4">
       <TournamentsRoot @select:tournament="onSelectTournament" />

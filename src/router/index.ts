@@ -7,7 +7,8 @@ const tournamentDashboardPage = () => import('@/views/TournamentDashboardPage.vu
 const tournamentRankingsPage = () => import('@/views/TournamentRankingPage.vue')
 const playersStatsPage = () => import('@/views/PlayersStatsPage.vue')
 const tournamentCalendarPage = () => import('@/views/TournamentCalendarPage.vue')
-const OnBoardingPage = () => import('@/views/OnBoardingPage.vue')
+const onBoardingPage = () => import('@/views/OnBoardingPage.vue')
+const infoPage = () => import('@/views/InfoPage.vue')
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -18,12 +19,17 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/onboarding',
     name: 'OnBoardingPage',
-    component: OnBoardingPage
+    component: onBoardingPage
   },
   {
     path: '/tournaments',
     name: 'TournamentsPage',
     component: tournamentsPage
+  },
+  {
+    path: '/info',
+    name: 'InfoPage',
+    component: infoPage
   },
   {
     path: '/tournaments/:id',
