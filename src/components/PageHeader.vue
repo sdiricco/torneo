@@ -32,11 +32,13 @@ import { useStore } from "@/store/main";
 import router from "@/router";
 
 defineProps(["title", "showBackButton", "showMenuButton"]);
+const emit =  defineEmits(['onBack'])
 
 const store = useStore();
 
 function onBack() {
   router.push({ name: "TournamentsPage" });
+  emit('onBack')
 }
 
 const menu = ref();

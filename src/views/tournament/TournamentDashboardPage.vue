@@ -1,6 +1,5 @@
 
 <template>
-
     <DashoboardRoot @go-to-players-page="goToPlayersPage" @go-to-ranking-page="goToRankingPage" />
 </template>
 

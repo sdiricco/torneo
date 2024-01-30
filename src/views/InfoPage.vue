@@ -1,7 +1,7 @@
 <template>
   <PageTemplate>
     <template #header>
-      <PageHeader title="Informazioni" :show-back-button="true" />
+      <PageHeader title="Informazioni" :show-back-button="true" @on-back="router.go(-1)" />
     </template>
     <div class="surface-ground p-4 h-full">
       <Card class="mb-4">
@@ -21,6 +21,7 @@ import PageHeader from "@/components/PageHeader.vue";
 const image = "assets/logo_aicslucca.png";
 import { useStore } from "@/store/main";
 import { storeToRefs } from "pinia";
+import router from "@/router";
 
 const { appVersion } = storeToRefs(useStore());
 </script>

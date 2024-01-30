@@ -3,10 +3,10 @@ import { RouteRecordRaw } from 'vue-router';
 
 const tournamentsPage = () => import('@/views/TournamentsPage.vue')
 const tournamentHomePage = () => import('@/views/TournamentHome.vue')
-const tournamentDashboardPage = () => import('@/views/TournamentDashboardPage.vue')
-const tournamentRankingsPage = () => import('@/views/TournamentRankingPage.vue')
-const playersStatsPage = () => import('@/views/PlayersStatsPage.vue')
-const tournamentCalendarPage = () => import('@/views/TournamentCalendarPage.vue')
+const tournamentDashboardPage = () => import('@/views/tournament/TournamentDashboardPage.vue')
+const tournamentRankingsPage = () => import('@/views/tournament/TournamentRankingPage.vue')
+const tournamentPlayersStatsPage = () => import('@/views/tournament/TournamentPlayersStatsPage.vue')
+const tournamentCalendarPage = () => import('@/views/tournament/TournamentCalendarPage.vue')
 const onBoardingPage = () => import('@/views/OnBoardingPage.vue')
 const infoPage = () => import('@/views/InfoPage.vue')
 
@@ -50,7 +50,7 @@ const routes: Array<RouteRecordRaw> = [
       {
         path: 'players',
         name: 'PlayersStatsPage',
-        component: playersStatsPage,
+        component: tournamentPlayersStatsPage,
       },
       {
         path: 'calendar',
@@ -62,7 +62,6 @@ const routes: Array<RouteRecordRaw> = [
 ]
 
 
-//standings
 const router = createRouter({
   history: createWebHashHistory(),
   routes
