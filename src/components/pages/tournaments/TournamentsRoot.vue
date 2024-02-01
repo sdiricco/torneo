@@ -16,7 +16,7 @@
         v-for="tournament in tournamentsFiltered"
         :key="tournament.id"
         @click="onClickTournament(tournament)"
-        class="surface-ground hover:surface-hover cursor-pointer w-full py-2 px-4 surface-border border-1 border-round mb-2">
+        class="surface-ground hover:surface-hover cursor-pointer w-full py-3 px-4 surface-border border-1 border-round mb-2">
         <div class="flex justify-content-between align-items-center gap-6">
           <div class="flex flex-column">
             <small class="mb-2 text-color-secondary" v-if="tournament.location">
@@ -36,21 +36,18 @@
 <script lang="ts" setup>
 import { computed, ref } from "vue";
 import { useStore } from "@/store/main";
-import { groupBy } from "lodash";
 import { storeToRefs } from "pinia";
 import { watchDebounced } from "@vueuse/core";
 import SkeletonCard from "@/components/shared/SkeletonCard.vue";
 
 const mainStore = useStore();
-const { tournaments, torunamentsV2, isLoadingDebounced } = storeToRefs(mainStore);
+const { torunamentsV2, isLoadingDebounced } = storeToRefs(mainStore);
 const emit = defineEmits<{
   (e: "select:tournament", id: number): void;
 }>();
 
 const searchTerm = ref("");
 const searchTermDebounced = ref("");
-
-const selectedCity = ref();
 
 const selectedCategory = ref("CALCIO A 5");
 const categories = ref(["CALCIO A 5", "CALCIO A 7", "CALCIO A 11"]);
@@ -64,10 +61,8 @@ watchDebounced(
 );
 
 const tournamentsFiltered = computed(() =>
-  torunamentsV2.value.filter((t) => t.category === selectedCategory.value && t.path.toLowerCase().includes(searchTermDebounced.value))
+  torunamentsV2.value.filter((t) => t.category === selectedCategory.value && t.path.toLowerCase().includes(searchTermDebounced.value.toLocaleUpperCase()))
 );
-
-const tournamentsGrouped = computed(() => groupBy(tournaments.value, "location"));
 
 function onClickTournament(t: any) {
   emit("select:tournament", t.id);
