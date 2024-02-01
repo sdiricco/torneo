@@ -1,8 +1,6 @@
 <template>
   <TournamentsPageTemplate>
-    <div class="p-4">
-      <TournamentsRoot @select:tournament="onSelectTournament" />
-    </div>
+    <TournamentsRoot @select:tournament="onSelectTournament" />
   </TournamentsPageTemplate>
 </template>
 

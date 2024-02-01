@@ -1,26 +1,29 @@
 <template>
-  <span class="p-input-icon-left w-full mb-4">
-    <i class="pi pi-search" />
-    <InputText v-model="searchTerm" placeholder="Es: Amatori/dilettanti..." class="w-full" />
-  </span>
-  <Dropdown v-model="selectedCategory" :options="categories" placeholder="" class="mb-4" />
-  <div>
-    <div
-      v-for="tournament in tournamentsFiltered"
-      :key="tournament.id"
-      @click="onClickTournament(tournament)"
-      class="surface-ground hover:surface-hover cursor-pointer w-full py-2 px-4 surface-border border-1 border-round mb-2">
-      <div class="flex justify-content-between align-items-center gap-6">
-        <div>
-          <div class="font-bold mb-2">
-            {{ tournament.location }}
+  <div class="flex flex-column h-screen p-4">
+    <div class="surface-border border-bottom-1 pb-4 mb-4">
+      <span class="p-input-icon-left w-full mb-4">
+        <i class="pi pi-search" />
+        <InputText v-model="searchTerm" placeholder="Es: Amatori/dilettanti..." class="w-full" />
+      </span>
+      <Dropdown v-model="selectedCategory" :options="categories" placeholder="" />
+    </div>
+
+    <div class="overflow-auto">
+      <div
+        v-for="tournament in tournamentsFiltered"
+        :key="tournament.id"
+        @click="onClickTournament(tournament)"
+        class="surface-ground hover:surface-hover cursor-pointer w-full py-2 px-4 surface-border border-1 border-round mb-2">
+        <div class="flex justify-content-between align-items-center gap-6">
+          <div class="flex flex-column">
+            <small class="mb-2 text-color-secondary" v-if="tournament.location">
+              {{ tournament.location }}
+            </small>
+            <div class="font-bold">{{ tournament.name }}</div>
           </div>
-          <div class="flex align-items-center">
-            <small>{{ tournament.name }}</small>
+          <div>
+            <i class="pi pi-arrow-right"></i>
           </div>
-        </div>
-        <div>
-          <i class="pi pi-arrow-right"></i>
         </div>
       </div>
     </div>
