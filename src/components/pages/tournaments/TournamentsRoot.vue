@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-column h-screen p-4">
+  <div class="flex flex-column h-full p-4">
     <div class="surface-border border-bottom-1 pb-4 mb-4">
       <span class="p-input-icon-left w-full mb-4">
         <i class="pi pi-search" />
@@ -9,6 +9,9 @@
     </div>
 
     <div class="overflow-auto">
+      <template v-if="isLoadingDebounced">
+        <SkeletonCard v-for="i in 6" :key="i" class="mb-2" />
+      </template>
       <div
         v-for="tournament in tournamentsFiltered"
         :key="tournament.id"
@@ -36,9 +39,10 @@ import { useStore } from "@/store/main";
 import { groupBy } from "lodash";
 import { storeToRefs } from "pinia";
 import { watchDebounced } from "@vueuse/core";
+import SkeletonCard from "@/components/shared/SkeletonCard.vue";
 
 const mainStore = useStore();
-const { tournaments, torunamentsV2 } = storeToRefs(mainStore);
+const { tournaments, torunamentsV2, isLoadingDebounced } = storeToRefs(mainStore);
 const emit = defineEmits<{
   (e: "select:tournament", id: number): void;
 }>();
