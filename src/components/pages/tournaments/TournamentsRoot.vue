@@ -61,7 +61,7 @@ watchDebounced(
 );
 
 const tournamentsFiltered = computed(() =>
-  torunamentsV2.value.filter((t) => t.category === selectedCategory.value && t.path.toLowerCase().includes(searchTermDebounced.value.toLocaleUpperCase()))
+  torunamentsV2.value.filter((t) => t.category === selectedCategory.value && t.path.toLowerCase().includes(searchTermDebounced.value.toLowerCase()))
 );
 
 function onClickTournament(t: any) {
