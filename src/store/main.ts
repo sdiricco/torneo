@@ -1,11 +1,9 @@
 import { defineStore } from "pinia";
 import { Preferences } from "@capacitor/preferences";
-import { setTheme } from "@/theme/utility";
 import { Network } from "@capacitor/network";
 
-
-import * as api from "@/api/api"
-import { ITournamentDetails, IPlayerStats, ITournamentEntry, ICalendar } from "@/api/interfaces";
+import * as api from "@/api/api";
+import { ITournamentDetails, IPlayerStats, ITournamentEntry, ICalendar, ITournamentEntryV2 } from "@/api/interfaces";
 
 interface IState {
   httpRequestOnGoing: boolean;
@@ -24,6 +22,7 @@ interface IState {
 
   //tournament specific
   tournaments: ITournamentEntry[];
+  torunamentsV2: ITournamentEntryV2[];
   tournamentDetails: ITournamentDetails | undefined;
   playersStats: IPlayerStats[];
   tournamentCalendar: ICalendar | undefined;
@@ -33,8 +32,7 @@ interface IState {
     fetchTournamentDetails: boolean;
     fetchTournamentPlayersStats: boolean;
     fetchTournamentCalender: boolean;
-  }
-
+  };
 }
 export const useStore = defineStore({
   id: "store",
@@ -53,6 +51,7 @@ export const useStore = defineStore({
     longLoading: false,
 
     tournaments: [],
+    torunamentsV2: [],
     tournamentDetails: undefined,
     playersStats: [],
     tournamentCalendar: undefined,
@@ -63,8 +62,7 @@ export const useStore = defineStore({
       fetchTournamentDetails: false,
       fetchTournamentPlayersStats: false,
       fetchTournamentCalender: false,
-    }
-
+    },
   }),
   getters: {
     isDark: (state) => state.preferences.isDark,
@@ -73,14 +71,11 @@ export const useStore = defineStore({
     getLatestMatchResults: (state) => state.tournamentDetails?.latestMatches || [],
     getNextMatches: (state) => state.tournamentDetails?.nextMatches || [],
     getTournamentCalendarValues: (state) => state.tournamentCalendar?.values || [],
-    getIsLoading: (state) => Object.values(state.loading).some(item => item),
+    getIsLoading: (state) => Object.values(state.loading).some((item) => item),
   },
   actions: {
     async toggleTheme(isDark: boolean) {
       this.preferences.isDark = isDark;
-      console.log("Toggle theme");
-      console.log("\tisDark", isDark);
-      await setTheme(isDark);
     },
     async fetchPreferences() {
       console.log("Fetch preferences");
@@ -123,7 +118,6 @@ export const useStore = defineStore({
     },
     async loadApp() {
       await this.fetchPreferences();
-      await setTheme(this.isDark);
       this.listenForNetworkChanges();
       await this.getNetworkStatus();
     },
@@ -143,6 +137,14 @@ export const useStore = defineStore({
       this.loading.fetchTournaments = false;
     },
 
+    //Fetch list of tournaments
+    async fecthTournamentsV2() {
+      this.loading.fetchTournaments = true;
+      const response = await api.getTournamentsV2();
+      this.torunamentsV2 = response.data.data;
+      this.loading.fetchTournaments = false;
+    },
+
     //fetch tournament details
     async fecthTournamentDetails(id: string) {
       this.loading.fetchTournamentDetails = true;
@@ -155,12 +157,12 @@ export const useStore = defineStore({
     async fetchPlayers(id: string) {
       this.loading.fetchTournamentPlayersStats = true;
       const response = await api.getPlayersStats(id);
-      this.playersStats = response.data.data
+      this.playersStats = response.data.data;
       this.loading.fetchTournamentPlayersStats = false;
     },
 
     //fetch tournament calendar
-    async fetchTournamentCalendar(id: string, week?:number) {
+    async fetchTournamentCalendar(id: string, week?: number) {
       this.loading.fetchTournamentCalender = true;
       const response = await api.getTournamentCalendar(id, week);
       this.tournamentCalendar = response.data.data;

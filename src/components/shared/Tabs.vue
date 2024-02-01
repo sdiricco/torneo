@@ -9,7 +9,7 @@
       },
     }">
     <template #item="{ item, props }">
-      <a v-ripple v-bind="props.action" class="flex flex-column align-items-center gap-2 bg-primary-50">
+      <a v-ripple v-bind="props.action" class="flex flex-column align-items-center gap-2 bg-primary-50 py-3 px-2 border-none">
         <font-awesome-icon :icon="item.icon" />
         <span v-bind="props.label">{{ item.label }}</span>
       </a>
@@ -18,18 +18,18 @@
 </template>
 
 <script lang="ts" setup>
-import type { MenuItem } from 'primevue/menuitem';
-import type {TabMenuChangeEvent} from "primevue/tabmenu"
+import type { MenuItem } from "primevue/menuitem";
+import type { TabMenuChangeEvent } from "primevue/tabmenu";
 interface Props {
   items: MenuItem[];
-  activeItemIdx: number
+  activeItemIdx: number;
 }
 const props = defineProps<Props>();
 const emit = defineEmits<{
   (e: "tab:change", value: MenuItem): void;
 }>();
 
-function onTabChange(evt:TabMenuChangeEvent){
-    emit('tab:change', props.items[evt.index])
+function onTabChange(evt: TabMenuChangeEvent) {
+  emit("tab:change", props.items[evt.index]);
 }
 </script>

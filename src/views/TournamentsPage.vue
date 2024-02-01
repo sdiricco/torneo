@@ -1,8 +1,5 @@
 <template>
   <TournamentsPageTemplate>
-    <template #header>
-      <PageHeader title="AICS Lucca - Campionati di calcio a 5" :show-menu-button="true"/>
-    </template>
     <div class="p-4">
       <TournamentsRoot @select:tournament="onSelectTournament" />
     </div>
@@ -12,22 +9,20 @@
 <script lang="ts" setup>
 import { onMounted } from "vue";
 import { useStore } from "@/store/main";
-import { storeToRefs } from "pinia";
 import router from "@/router";
 import TournamentsPageTemplate from "@/components/layout/TournamentsPageTemplate.vue";
-import WaitServer from "@/components/pages/tournaments/WaitServer.vue";
-import PageHeader from "@/components/PageHeader.vue"
+import PageHeader from "@/components/PageHeader.vue";
 import TournamentsRoot from "@/components/pages/tournaments/TournamentsRoot.vue";
 
 const mainStore = useStore();
-const { tournaments, longLoading } = storeToRefs(mainStore);
 
-function onSelectTournament(id:number){
+function onSelectTournament(id: number) {
   router.push({ name: "TournamentHome", params: { id } });
 }
 
 onMounted(async () => {
   await mainStore.fecthTournaments();
+  await mainStore.fecthTournamentsV2();
 });
 </script>
 
