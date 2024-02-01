@@ -38,7 +38,7 @@ export const useStore = defineStore({
   id: "store",
   state: (): IState => ({
     httpRequestOnGoing: false,
-    appVersion: "0.0.1",
+    appVersion: "0.0.2",
     networkStatus: {
       connected: true,
       connectionType: "",
