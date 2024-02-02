@@ -4,8 +4,16 @@
       <SkeletonCard v-for="i in 6" :key="i" />
     </template>
     <template v-else>
-      <FirstTeamSection v-if="firstTeam" :team="firstTeam" @goToRankingPage="emit('goToRankingPage')" />
-      <FirstPlayerSection v-if="firstPlayer" :player="firstPlayer" @goToPlayersPage="emit('goToPlayersPage')" />
+      <div class="text-xl font-bold px-3 pt-3 flex align-items-center">
+        <font-awesome-icon icon="fa-solid fa-trophy" class="mr-3"></font-awesome-icon>
+        <div class="">Classifica</div>
+      </div>
+      <FirstTeams :teams="getTeamsRanking" :max-teams-visible="3" class="mb-3" @goToRankingPage="emit('goToRankingPage')" />
+      <div class="text-xl font-bold px-3 pt-3 flex align-items-center">
+        <font-awesome-icon icon="fa-solid fa-people-group" class="mr-3"></font-awesome-icon>
+        <div class="">Classifica marcatori</div>
+      </div>
+      <FirstPlayers :players="playersStats" :max-players-visible="3" class="mb-3" @go-to-ranking-page="emit('goToPlayersPage')" />
       <div v-if="getLatestMatchResults.length" class="p-3 surface-card mb-3">
         <div class="text-2xl text-color border-bottom-1 surface-border pb-3 mb-1">Ultimi risultati</div>
         <LatestMatchResult :match-list="getLatestMatchResults" />
@@ -26,9 +34,11 @@ import { maxBy } from "lodash";
 import { IPlayerRanking, ITeamRanking } from "@/api/interfaces";
 import FirstPlayerSection from "./FirstPlayerSection.vue";
 import FirstTeamSection from "./FirstTeamSection.vue";
+import FirstPlayers from "./FirstPlayers.vue";
 import SkeletonCard from "@/components/shared/SkeletonCard.vue";
 import LatestMatchResult from "./LatestMatchResult.vue";
 import NextMatchList from "./NextMatchList.vue";
+import FirstTeams from "./FirstTeams.vue";
 
 const { playersStats, getLatestMatchResults, getNextMatches, getTeamsRanking, isLoadingDebounced } = storeToRefs(useStore());
 

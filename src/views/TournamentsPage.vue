@@ -9,7 +9,6 @@ import { onMounted } from "vue";
 import { useStore } from "@/store/main";
 import router from "@/router";
 import TournamentsPageTemplate from "@/components/layout/TournamentsPageTemplate.vue";
-import PageHeader from "@/components/PageHeader.vue";
 import TournamentsRoot from "@/components/pages/tournaments/TournamentsRoot.vue";
 
 const mainStore = useStore();
