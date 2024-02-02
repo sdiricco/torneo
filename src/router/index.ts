@@ -1,70 +1,69 @@
-import { createRouter,  createWebHashHistory } from '@ionic/vue-router';
-import { RouteRecordRaw } from 'vue-router';
+import { createRouter, createWebHashHistory } from "@ionic/vue-router";
+import { RouteRecordRaw } from "vue-router";
 
-const tournamentsPage = () => import('@/views/TournamentsPage.vue')
-const tournamentHomePage = () => import('@/views/TournamentHome.vue')
-const tournamentDashboardPage = () => import('@/views/tournament/TournamentDashboardPage.vue')
-const tournamentRankingsPage = () => import('@/views/tournament/TournamentRankingPage.vue')
-const tournamentPlayersStatsPage = () => import('@/views/tournament/TournamentPlayersStatsPage.vue')
-const tournamentCalendarPage = () => import('@/views/tournament/TournamentCalendarPage.vue')
-const onBoardingPage = () => import('@/views/OnBoardingPage.vue')
-const infoPage = () => import('@/views/InfoPage.vue')
+const tournamentsPage = () => import("@/views/TournamentsPage.vue");
+const tournamentHomePage = () => import("@/views/TournamentHome.vue");
+const tournamentDashboardPage = () => import("@/views/tournament/TournamentDashboardPage.vue");
+const tournamentRankingsPage = () => import("@/views/tournament/TournamentRankingPage.vue");
+const tournamentPlayersStatsPage = () => import("@/views/tournament/TournamentPlayersStatsPage.vue");
+const tournamentCalendarPage = () => import("@/views/tournament/TournamentCalendarPage.vue");
+const onBoardingPage = () => import("@/views/OnBoardingPage.vue");
+const infoPage = () => import("@/views/InfoPage.vue");
 
 const routes: Array<RouteRecordRaw> = [
   {
-    path: '/',
-    name: 'RootPage',
-    redirect: '/onboarding'
+    path: "/",
+    name: "RootPage",
+    redirect: "/onboarding",
   },
   {
-    path: '/onboarding',
-    name: 'OnBoardingPage',
-    component: onBoardingPage
+    path: "/onboarding",
+    name: "OnBoardingPage",
+    component: onBoardingPage,
   },
   {
-    path: '/tournaments',
-    name: 'TournamentsPage',
-    component: tournamentsPage
+    path: "/tournaments",
+    name: "TournamentsPage",
+    component: tournamentsPage,
   },
   {
-    path: '/info',
-    name: 'InfoPage',
-    component: infoPage
+    path: "/info",
+    name: "InfoPage",
+    component: infoPage,
   },
   {
-    path: '/tournaments/:id',
-    name: 'TournamentHome',
+    path: "/tournaments/:id",
+    name: "TournamentHome",
     component: tournamentHomePage,
-    redirect: to => ({ name: 'TournamentDashboard', params: { id: to.params.id } }),
+    redirect: (to) => ({ name: "TournamentDashboard", params: { id: to.params.id } }),
     children: [
       {
-        path: 'dashboard',
-        name: 'TournamentDashboard',
+        path: "dashboard",
+        name: "TournamentDashboard",
         component: tournamentDashboardPage,
       },
       {
-        path: 'tournament-ranking',
-        name: 'TournamentRankingPage',
+        path: "tournament-ranking",
+        name: "TournamentRankingPage",
         component: tournamentRankingsPage,
       },
       {
-        path: 'players',
-        name: 'PlayersStatsPage',
+        path: "players",
+        name: "PlayersStatsPage",
         component: tournamentPlayersStatsPage,
       },
       {
-        path: 'calendar',
-        name: 'CalendarPage',
+        path: "calendar",
+        name: "CalendarPage",
         component: tournamentCalendarPage,
       },
-    ]
+    ],
   },
-]
-
+];
 
 const router = createRouter({
   history: createWebHashHistory(),
-  routes
-})
+  routes,
+});
 
-export default router
+export default router;

@@ -1,6 +1,10 @@
-html{
+* {
+    -webkit-tap-highlight-color: transparent;
+}
+
+html {
     height: 100%;
-    font-size: 0.9rem;
+    font-size: 0.8rem;
 }
 
 body {
@@ -11,11 +15,11 @@ body {
     background-color: var(--surface-ground);
 }
 
-#app{
+#app {
     height: 100%;
 }
 
-*:focus{
+*:focus {
     box-shadow: none !important;
     outline: none !important;
 }
