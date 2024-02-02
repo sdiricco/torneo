@@ -42,7 +42,7 @@ import { watchDebounced } from "@vueuse/core";
 import SkeletonCard from "@/components/shared/SkeletonCard.vue";
 
 const mainStore = useStore();
-const { torunamentsV2, isLoadingDebounced } = storeToRefs(mainStore);
+const { tournaments, isLoadingDebounced } = storeToRefs(mainStore);
 const emit = defineEmits<{
   (e: "select:tournament", id: number): void;
 }>();
@@ -62,7 +62,7 @@ watchDebounced(
 );
 
 const tournamentsFiltered = computed(() =>
-  torunamentsV2.value.filter((t) => t.category === selectedCategory.value && t.path.toLowerCase().includes(searchTermDebounced.value.toLowerCase()))
+  tournaments.value.filter((t) => t.category === selectedCategory.value && t.path.toLowerCase().includes(searchTermDebounced.value.toLowerCase()))
 );
 
 function onClickTournament(t: any) {

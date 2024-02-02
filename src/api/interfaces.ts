@@ -3,13 +3,6 @@ export interface IApiResponse<T> {
   data: T;
 }
 export interface ITournamentEntry {
-  name: string;
-  circolo: string;
-  location: string;
-  id: string;
-}
-
-export interface ITournamentEntryV2 {
   text: string;
   href: string;
   path: string;

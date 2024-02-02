@@ -3,7 +3,7 @@ import { Preferences } from "@capacitor/preferences";
 import { Network } from "@capacitor/network";
 
 import * as api from "@/api/api";
-import { ITournamentDetails, IPlayerStats, ITournamentEntry, ICalendar, ITournamentEntryV2 } from "@/api/interfaces";
+import { ITournamentDetails, IPlayerStats, ITournamentEntry, ICalendar } from "@/api/interfaces";
 
 interface IState {
   httpRequestOnGoing: boolean;
@@ -22,7 +22,6 @@ interface IState {
 
   //tournament specific
   tournaments: ITournamentEntry[];
-  torunamentsV2: ITournamentEntryV2[];
   tournamentDetails: ITournamentDetails | undefined;
   playersStats: IPlayerStats[];
   tournamentCalendar: ICalendar | undefined;
@@ -51,7 +50,6 @@ export const useStore = defineStore({
     longLoading: false,
 
     tournaments: [],
-    torunamentsV2: [],
     tournamentDetails: undefined,
     playersStats: [],
     tournamentCalendar: undefined,
@@ -134,14 +132,6 @@ export const useStore = defineStore({
       this.loading.fetchTournaments = true;
       const response = await api.getTournaments();
       this.tournaments = response.data.data;
-      this.loading.fetchTournaments = false;
-    },
-
-    //Fetch list of tournaments
-    async fecthTournamentsV2() {
-      this.loading.fetchTournaments = true;
-      const response = await api.getTournamentsV2();
-      this.torunamentsV2 = response.data.data;
       this.loading.fetchTournaments = false;
     },
 

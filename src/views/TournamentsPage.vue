@@ -20,7 +20,6 @@ function onSelectTournament(id: number) {
 
 onMounted(async () => {
   await mainStore.fecthTournaments();
-  await mainStore.fecthTournamentsV2();
 });
 </script>
 
