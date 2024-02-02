@@ -13,10 +13,11 @@
         <SkeletonCard v-for="i in 6" :key="i" class="mb-2" />
       </template>
       <div
+        v-ripple
         v-for="tournament in tournamentsFiltered"
         :key="tournament.id"
         @click="onClickTournament(tournament)"
-        class="surface-ground hover:surface-hover cursor-pointer w-full py-3 px-4 surface-border border-1 border-round mb-2">
+        class="p-ripple surface-ground hover:surface-hover cursor-pointer w-full py-3 px-4 surface-border border-1 border-round mb-2">
         <div class="flex justify-content-between align-items-center gap-6">
           <div class="flex flex-column">
             <small class="mb-2 text-color-secondary" v-if="tournament.location">
