@@ -8,18 +8,18 @@
         <font-awesome-icon icon="fa-solid fa-trophy" class="mr-3"></font-awesome-icon>
         <div class="">Classifica</div>
       </div>
-      <FirstTeams :teams="getTeamsRanking" :max-teams-visible="3" class="mb-3" @goToRankingPage="emit('goToRankingPage')" />
+      <FirstTeams :teams="getTeamsRanking" :max-teams-visible="3" class="m-3" @goToRankingPage="emit('goToRankingPage')" />
       <div class="text-xl font-bold px-3 pt-3 flex align-items-center">
         <font-awesome-icon icon="fa-solid fa-people-group" class="mr-3"></font-awesome-icon>
-        <div class="">Classifica marcatori</div>
+        <div>Classifica marcatori</div>
       </div>
-      <FirstPlayers :players="playersStats" :max-players-visible="3" class="mb-3" @go-to-ranking-page="emit('goToPlayersPage')" />
+      <FirstPlayers :players="playersStats" :max-players-visible="3" class="m-3" @go-to-ranking-page="emit('goToPlayersPage')" />
       <div v-if="getLatestMatchResults.length" class="p-3 surface-card mb-3">
-        <div class="text-2xl text-color border-bottom-1 surface-border pb-3 mb-1">Ultimi risultati</div>
+        <div class="text-2xl font-bold text-color border-bottom-1 surface-border pb-3 mb-1">Ultimi risultati</div>
         <LatestMatchResult :match-list="getLatestMatchResults" />
       </div>
       <div v-if="getNextMatches.length" class="p-3 surface-card">
-        <div class="text-2xl text-color border-bottom-1 surface-border pb-3 mb-1">Prossime partite</div>
+        <div class="text-2xl font-bold text-color border-bottom-1 surface-border pb-3 mb-1">Prossime partite</div>
         <NextMatchList :match-list="getNextMatches" />
       </div>
     </template>
