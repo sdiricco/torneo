@@ -16,7 +16,7 @@
     </div>
     <div class="flex justify-content-end">
       <Button
-        class="px-0 pb-0 mt-3 text-primary-700"
+        class="px-0 pb-0 mt-3 text-primary"
         icon="pi pi-arrow-right"
         iconPos="right"
         label="Classifica completa"

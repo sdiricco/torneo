@@ -11,6 +11,8 @@ import "/node_modules/primeflex/primeflex.css";
 //core
 import "primevue/resources/primevue.min.css";
 import "primeicons/primeicons.css";
+//primevue theme
+import "./assets/primevue-sass-theme-3.47/themes/lara/lara-light/blue/theme.scss";
 
 import "./main.css";
 
