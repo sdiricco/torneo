@@ -1,0 +1,17 @@
+.p-inputnumber {
+    &.p-invalid.p-component > .p-inputtext {
+        @include invalid-input();
+    }
+
+    &.p-variant-filled > .p-inputnumber-input {
+        background-color: $inputFilledBg;
+
+        &:enabled:hover {
+            background-color: $inputFilledHoverBg;
+        }
+
+        &:enabled:focus {
+            background-color: $inputFilledFocusBg;
+        }
+    }
+}

@@ -9,20 +9,20 @@
       </div>
     </div>
     <div class="col flex justify-content-end">
-        <Button
-          v-if="showMenuButton"
-          text
-          rounded
-          severity="secondary"
-          type="button"
-          icon="pi pi-ellipsis-v"
-          @click="toggle"
-          aria-haspopup="true"
-          aria-controls="overlay_menu" />
-        <Menu ref="menu" id="overlay_menu" :model="items" :popup="true" />
+      <Button
+        v-if="showMenuButton"
+        text
+        rounded
+        severity="secondary"
+        type="button"
+        icon="pi pi-ellipsis-v"
+        @click="toggle"
+        aria-haspopup="true"
+        aria-controls="overlay_menu" />
+      <Menu ref="menu" id="overlay_menu" :model="items" :popup="true" />
     </div>
   </div>
-  <ProgressBar v-if="store.isLoadingDebounced" mode="indeterminate" style="height: 5px" class="border-noround sticky bottom-0"></ProgressBar>
+  <ProgressBar v-if="store.isLoadingDebounced" mode="indeterminate" style="height: 4px" class="border-noround sticky bottom-0"></ProgressBar>
 </template>
 
 <script lang="ts" setup>
@@ -32,13 +32,13 @@ import { useStore } from "@/store/main";
 import router from "@/router";
 
 defineProps(["title", "showBackButton", "showMenuButton"]);
-const emit =  defineEmits(['onBack'])
+const emit = defineEmits(["onBack"]);
 
 const store = useStore();
 
 function onBack() {
   router.push({ name: "TournamentsPage" });
-  emit('onBack')
+  emit("onBack");
 }
 
 const menu = ref();
