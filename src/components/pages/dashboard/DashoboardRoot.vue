@@ -1,6 +1,6 @@
 <template>
   <div class="surface-ground text-color">
-    <template v-if="isLoadingDebounced">
+    <template v-if="getIsLoading">
       <SkeletonCard v-for="i in 6" :key="i" />
     </template>
     <template v-else>
@@ -27,6 +27,7 @@
 </template>
 
 <script lang="ts" setup>
+import { ref } from "vue";
 import { storeToRefs } from "pinia";
 import { useStore } from "@/store/main";
 import FirstPlayers from "./FirstPlayers.vue";
@@ -34,7 +35,7 @@ import SkeletonCard from "@/components/shared/SkeletonCard.vue";
 import FirstTeams from "./FirstTeams.vue";
 import MatchItem from "../../shared/MatchItem.vue";
 
-const { playersStats, getLatestMatchResults, getNextMatches, getTeamsRanking, isLoadingDebounced } = storeToRefs(useStore());
+const { playersStats, getLatestMatchResults, getNextMatches, getTeamsRanking, isLoadingDebounced, getIsLoading } = storeToRefs(useStore());
 
 const emit = defineEmits<{
   (e: "goToRankingPage"): void;

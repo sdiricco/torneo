@@ -27,6 +27,7 @@
 </template>
 
 <script setup lang="ts">
+import { computed } from "vue";
 import { ITeamRanking } from "@/api/interfaces";
 import AppCard from "@/components/shared/AppCard.vue";
 interface Props {
@@ -36,7 +37,7 @@ interface Props {
 
 const props = defineProps<Props>();
 
-const teamsFiltered = props.teams.filter((t, idx) => idx < props.maxTeamsVisible);
+const teamsFiltered = computed(() => props.teams.filter((t, idx) => idx < props.maxTeamsVisible));
 
 const emit = defineEmits(["goToRankingPage"]);
 </script>
