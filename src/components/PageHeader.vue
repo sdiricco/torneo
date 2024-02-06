@@ -22,7 +22,7 @@
       <Menu ref="menu" id="overlay_menu" :model="items" :popup="true" />
     </div>
   </div>
-  <ProgressBar v-if="store.isLoadingDebounced" mode="indeterminate" style="height: 4px" class="border-noround sticky bottom-0"></ProgressBar>
+  <ProgressBar v-if="store.getIsLoading" mode="indeterminate" style="height: 4px" class="border-noround sticky bottom-0"></ProgressBar>
 </template>
 
 <script lang="ts" setup>

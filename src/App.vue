@@ -35,7 +35,7 @@ watch(getIsLoading, (value) => {
     if (intervalId) {
       clearInterval(intervalId);
     }
-    intervalId = setTimeout(() => (longLoading.value = true), 5000);
+    intervalId = setTimeout(() => (longLoading.value = true), 8000);
   } else {
     longLoading.value = false;
     clearInterval(intervalId);
