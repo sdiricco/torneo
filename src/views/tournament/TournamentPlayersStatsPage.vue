@@ -14,6 +14,7 @@ const store = useStore();
 const id = useRoute().params.id as string;
 
 onBeforeMount(async () => {
+  await store.fecthTournamentDetails(id);
   await store.fetchPlayers(id);
 });
 </script>

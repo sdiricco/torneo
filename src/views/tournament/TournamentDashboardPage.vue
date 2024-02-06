@@ -22,6 +22,7 @@ function goToRankingPage() {
 }
 
 onBeforeMount(async () => {
+  await store.fecthTournamentDetails(id);
   await store.fetchPlayers(id);
 });
 </script>

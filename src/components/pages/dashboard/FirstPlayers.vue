@@ -1,6 +1,6 @@
 <template>
   <AppCard>
-    <div class="grid grid-nogutter surface-border border-bottom-1 pb-3">
+    <div class="grid grid-nogutter surface-border border-bottom-1 pb-4">
       <div class="col-1"></div>
       <div class="col-10">
         <div class="font-bold">Giocatore</div>
@@ -9,14 +9,14 @@
         <div class="font-bold">Goal</div>
       </div>
     </div>
-    <div class="grid grid-nogutter pt-3" v-for="(p, idx) in playersFiltered" :key="idx">
+    <div class="grid grid-nogutter pt-4" v-for="(p, idx) in playersFiltered" :key="idx">
       <div class="col-1">{{ idx + 1 }}</div>
       <div class="col-10">{{ `${p.firstName} ${p.lastName}` }}</div>
       <div class="col-1">{{ p.goal }}</div>
     </div>
     <div class="flex justify-content-end">
       <Button
-        class="px-0 pb-0 mt-3 text-primary"
+        class="px-0 pb-0 mt-4 text-primary"
         icon="pi pi-arrow-right"
         iconPos="right"
         label="Classifica completa"
