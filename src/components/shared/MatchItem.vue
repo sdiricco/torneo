@@ -11,7 +11,7 @@
         {{ ("scoreA" in match && match.scoreA) || "-" }}
       </div>
     </div>
-    <div class="flex justify-content-between mb-4">
+    <div class="flex justify-content-between mb-2">
       <div class="flex align-items-center">
         <font-awesome-icon :icon="['fas', 'shirt']" class="mr-2" />
         <div class="text-color">
@@ -23,17 +23,28 @@
       </div>
     </div>
     <small class="text-color-secondary">
-      {{ `${formatDate(match.dateUtc)}, ${match.location}` }}
+      {{ `${(match.dateUtc && formatDate(match.dateUtc)) || "Da definire"}, ${match.location || "-"}` }}
     </small>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { ILatestMatchResult, INextMatchResult } from "@/api/interfaces";
 import { formatDate } from "@/utils/date";
 
 interface Props {
-  match: ILatestMatchResult | INextMatchResult;
+  match: {
+    teamA: string;
+    teamB: string;
+    score?: string;
+    date?: string;
+    time?: string;
+    dateUtc?: string;
+    scoreA?: number;
+    scoreB?: number;
+    location?: string;
+    matchCompleted?: boolean;
+    week?: string;
+  };
 }
 
 defineProps<Props>();

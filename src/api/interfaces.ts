@@ -33,6 +33,7 @@ export interface ICalendar {
     dateUtc: string;
     scoreA: number;
     scoreB: number;
+    location: string;
   }[];
   week: number;
   weekCount: number;
@@ -82,8 +83,8 @@ export interface ILatestMatchResult {
   time: string;
   location: string;
   dateUtc: string;
-  scoreA: string;
-  scoreB: string;
+  scoreA: number;
+  scoreB: number;
   matchCompleted: boolean;
 }
 

@@ -1,16 +1,9 @@
 <template>
   <div class="pb-4">
-    <DataTable
-      scrollable
-      scrollHeight="flex"
-      class="w-full"
-      :value="getTeamsRanking"
-      dataKey="name"
-      stripedRows
-    >
+    <DataTable scrollable scrollHeight="flex" class="w-full" :value="getTeamsRanking" dataKey="name">
       <Column frozen>
         <template #body="{ index }">
-          {{ index }}
+          {{ index + 1 }}
         </template>
       </Column>
       <Column
@@ -19,8 +12,7 @@
         sortable
         header="Squadra"
         style="width: 180px; max-width: 180px"
-        class="white-space-nowrap overflow-x-hidden text-overflow-ellipsis"
-      ></Column>
+        class="white-space-nowrap overflow-x-hidden text-overflow-ellipsis"></Column>
       <Column field="points" sortable header="PT" class="font-bold"></Column>
       <Column field="matches" sortable header="G"></Column>
       <Column field="won_matches" sortable header="V"></Column>
@@ -49,5 +41,4 @@ import { storeToRefs } from "pinia";
 const { getTeamsRanking } = storeToRefs(useStore());
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>

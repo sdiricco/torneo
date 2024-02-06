@@ -1,29 +1,19 @@
 <template>
-  <Dropdown
-    @update:modelValue="onUpdateWeek"
-    :modelValue="selectedWeek"
-    :options="weekOptionList"
-    optionLabel="label"
-    placeholder="Seleziona una giornata"
-    class="m-3" />
-  <DataTable scrollable scrollHeight="100%" :class="`w-full`" :value="getTournamentCalendarValues" dataKey="team" stripedRows>
-    <Column field="dateUtc" sortable header="Data" class="font-bold white-space-nowrap">
-      <template #body="{ data }">
-        {{ (data.dateUtc && formatDate(data.dateUtc)) || "-" }}
-      </template>
-    </Column>
-    <Column field="teamA" header="Squadra" class="white-space-nowrap"></Column>
-    <Column field="teamB" header="Squadra" class="white-space-nowrap"></Column>
-    <Column field="score" header="Risultato" class="font-bold"></Column>
-    <Column field="location" header="Luogo" class="white-space-nowrap"></Column>
-    <template #footer>
-      <div class="flex align-items-center justify-content-center gap-3">
-        <Button icon="pi pi-angle-left" text rounded severity="secondary" :disabled="getIsLoading || week <= 1" @click="onPrevWeek" />
-        <div>{{ `Giornata ${week}` }}</div>
-        <Button icon="pi pi-angle-right" text rounded severity="secondary" :disabled="getIsLoading || week >= weekCount" @click="onNextWeek" />
+  <div class="surface-ground h-full">
+    <div>
+      <Dropdown
+        @update:modelValue="onUpdateWeek"
+        :modelValue="selectedWeek"
+        :options="weekOptionList"
+        optionLabel="label"
+        placeholder="Seleziona una giornata"
+        class="m-3" />
+      <div class="p-4 surface-card">
+        <div class="text-2xl font-bold text-color border-bottom-1 surface-border pb-4 mb-4">Calendario giornata {{ selectedWeek?.week }}</div>
+        <MatchItem v-for="(match, idx) in getTournamentCalendarValues" :match="match" :key="idx" class="pb-4 mb-4 surface-border border-bottom-1" />
       </div>
-    </template>
-  </DataTable>
+    </div>
+  </div>
 </template>
 <script lang="ts" setup>
 import { computed, ref } from "vue";
@@ -32,6 +22,7 @@ import { storeToRefs } from "pinia";
 import { useRoute } from "vue-router";
 import { formatDate } from "@/utils/date";
 import { generateWeekList } from "@/utils/tournament-calendar";
+import MatchItem from "@/components/shared/MatchItem.vue";
 
 const id = useRoute().params.id as string;
 
