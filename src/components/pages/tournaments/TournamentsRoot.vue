@@ -9,7 +9,7 @@
     </div>
 
     <div class="overflow-auto">
-      <template v-if="isLoadingDebounced">
+      <template v-if="getIsLoading">
         <SkeletonCard v-for="i in 6" :key="i" class="mb-2" />
       </template>
       <div
@@ -42,7 +42,7 @@ import { watchDebounced } from "@vueuse/core";
 import SkeletonCard from "@/components/shared/SkeletonCard.vue";
 
 const mainStore = useStore();
-const { tournaments, isLoadingDebounced } = storeToRefs(mainStore);
+const { tournaments, getIsLoading } = storeToRefs(mainStore);
 const emit = defineEmits<{
   (e: "select:tournament", id: number): void;
 }>();

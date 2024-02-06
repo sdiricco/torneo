@@ -32,6 +32,15 @@ interface IState {
     fetchTournamentPlayersStats: boolean;
     fetchTournamentCalender: boolean;
   };
+
+  loadingMessage: {
+    fetchTournaments: string | undefined;
+    fetchTournamentDetails: string | undefined;
+    fetchTournamentPlayersStats: string | undefined;
+    fetchTournamentCalender: string | undefined;
+  };
+
+  requestDate: Date | undefined;
 }
 export const useStore = defineStore({
   id: "store",
@@ -61,6 +70,15 @@ export const useStore = defineStore({
       fetchTournamentPlayersStats: false,
       fetchTournamentCalender: false,
     },
+
+    loadingMessage: {
+      fetchTournaments: undefined,
+      fetchTournamentDetails: undefined,
+      fetchTournamentPlayersStats: undefined,
+      fetchTournamentCalender: undefined,
+    },
+
+    requestDate: undefined,
   }),
   getters: {
     isDark: (state) => state.preferences.isDark,
@@ -130,32 +148,44 @@ export const useStore = defineStore({
     //Fetch list of tournaments
     async fecthTournaments() {
       this.loading.fetchTournaments = true;
+      this.loadingMessage.fetchTournaments = "Sto caricando i campionati..";
+      this.requestDate = new Date();
       const response = await api.getTournaments();
       this.tournaments = response.data.data;
+      this.loadingMessage.fetchTournaments = undefined;
       this.loading.fetchTournaments = false;
     },
 
     //fetch tournament details
     async fecthTournamentDetails(id: string) {
       this.loading.fetchTournamentDetails = true;
+      this.loadingMessage.fetchTournamentDetails = "Sto caricando i dettagli del campionato ..";
+      this.requestDate = new Date();
       const response = await api.getTournamentDetails(id);
       this.tournamentDetails = response.data.data;
+      this.loadingMessage.fetchTournamentDetails = undefined;
       this.loading.fetchTournamentDetails = false;
     },
 
     //fetch players of tournament
     async fetchPlayers(id: string) {
       this.loading.fetchTournamentPlayersStats = true;
+      this.loadingMessage.fetchTournamentPlayersStats = "Sto caricando le statistiche dei calciatori ..";
+      this.requestDate = new Date();
       const response = await api.getPlayersStats(id);
       this.playersStats = response.data.data;
+      this.loadingMessage.fetchTournamentPlayersStats = undefined;
       this.loading.fetchTournamentPlayersStats = false;
     },
 
     //fetch tournament calendar
     async fetchTournamentCalendar(id: string, week?: number) {
       this.loading.fetchTournamentCalender = true;
+      this.loadingMessage.fetchTournamentCalender = "Sto caricando il calendario delle giornate ..";
+      this.requestDate = new Date();
       const response = await api.getTournamentCalendar(id, week);
       this.tournamentCalendar = response.data.data;
+      this.loadingMessage.fetchTournamentCalender = undefined;
       this.loading.fetchTournamentCalender = false;
     },
   },
