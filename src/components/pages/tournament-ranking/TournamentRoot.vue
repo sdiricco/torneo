@@ -1,6 +1,6 @@
 <template>
   <div class="pb-4">
-    <DataTable scrollable scrollHeight="flex" class="w-full" :value="getTeamsRanking" dataKey="name">
+    <DataTable scrollable scrollHeight="flex" class="w-full" :value="getTeamsRanking" dataKey="name" :loading="getIsLoading">
       <Column frozen>
         <template #body="{ index }">
           {{ index + 1 }}
@@ -38,7 +38,7 @@ import { useStore } from "@/store/main";
 import { standingsLegend } from "@/constants";
 import { storeToRefs } from "pinia";
 
-const { getTeamsRanking } = storeToRefs(useStore());
+const { getTeamsRanking, getIsLoading } = storeToRefs(useStore());
 </script>
 
 <style scoped></style>

@@ -1,28 +1,30 @@
 <template>
-  <div class="grid grid-nogutter align-items-center p-2">
-    <div class="col">
-      <Button v-if="showBackButton" icon="pi pi-arrow-left" text rounded severity="secondary" @click="onBack" />
-    </div>
-    <div class="col-9">
-      <div class="text-color font-bold text-overflow-ellipsis overflow-hidden white-space-nowrap">
-        {{ title || " " }}
+  <div class="relative">
+    <div class="grid grid-nogutter align-items-center p-2">
+      <div class="col">
+        <Button v-if="showBackButton" icon="pi pi-arrow-left" text rounded severity="secondary" @click="onBack" />
+      </div>
+      <div class="col-9">
+        <div class="text-color font-bold text-overflow-ellipsis overflow-hidden white-space-nowrap">
+          {{ title || " " }}
+        </div>
+      </div>
+      <div class="col flex justify-content-end">
+        <Button
+          v-if="showMenuButton"
+          text
+          rounded
+          severity="secondary"
+          type="button"
+          icon="pi pi-ellipsis-v"
+          @click="toggle"
+          aria-haspopup="true"
+          aria-controls="overlay_menu" />
+        <Menu ref="menu" id="overlay_menu" :model="items" :popup="true" />
       </div>
     </div>
-    <div class="col flex justify-content-end">
-      <Button
-        v-if="showMenuButton"
-        text
-        rounded
-        severity="secondary"
-        type="button"
-        icon="pi pi-ellipsis-v"
-        @click="toggle"
-        aria-haspopup="true"
-        aria-controls="overlay_menu" />
-      <Menu ref="menu" id="overlay_menu" :model="items" :popup="true" />
-    </div>
+    <ProgressBar v-if="store.getIsLoading" mode="indeterminate" style="height: 4px" class="border-noround absolute bottom-0 w-full"></ProgressBar>
   </div>
-  <ProgressBar v-if="store.getIsLoading" mode="indeterminate" style="height: 4px" class="border-noround sticky bottom-0"></ProgressBar>
 </template>
 
 <script lang="ts" setup>
