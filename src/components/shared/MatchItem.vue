@@ -1,33 +1,39 @@
 <template>
-  <div v-for="item in matchList" class="border-bottom-1 surface-border p-2 mb-1">
-    <div class="flex justify-content-between mb-1">
+  <div>
+    <div class="flex justify-content-between mb-2">
       <div class="flex align-items-center">
         <font-awesome-icon :icon="['fas', 'shirt']" class="mr-2" />
         <div class="text-color">
-          {{ item.teamA }}
+          {{ match.teamA }}
         </div>
       </div>
+      <div class="font-bold">
+        {{ ("scoreA" in match && match.scoreA) || "-" }}
+      </div>
     </div>
-    <div class="flex justify-content-between">
+    <div class="flex justify-content-between mb-4">
       <div class="flex align-items-center">
         <font-awesome-icon :icon="['fas', 'shirt']" class="mr-2" />
         <div class="text-color">
-          {{ item.teamB }}
+          {{ match.teamB }}
         </div>
+      </div>
+      <div class="font-bold">
+        {{ ("scoreB" in match && match.scoreB) || "-" }}
       </div>
     </div>
     <small class="text-color-secondary">
-      {{ `${formatDate(item.dateUtc)}, ${item.location}` }}
+      {{ `${formatDate(match.dateUtc)}, ${match.location}` }}
     </small>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { INextMatchResult } from "@/api/interfaces";
+import { ILatestMatchResult, INextMatchResult } from "@/api/interfaces";
 import { formatDate } from "@/utils/date";
 
 interface Props {
-  matchList: INextMatchResult[];
+  match: ILatestMatchResult | INextMatchResult;
 }
 
 defineProps<Props>();
