@@ -1,12 +1,16 @@
-export interface IApiResponse<T>{
+export interface IApiResponse<T> {
   status: string;
-  data: T
+  data: T;
 }
 export interface ITournamentEntry {
-  name: string;
-  circolo: string;
-  location: string;
+  text: string;
+  href: string;
+  path: string;
   id: string;
+  levelCount: number;
+  category: string;
+  name: string;
+  location: string;
 }
 
 export interface ITournamentDetails {
@@ -19,7 +23,7 @@ export interface ITournamentDetails {
   nextMatches: INextMatchResult[];
 }
 
-export interface ICalendar{
+export interface ICalendar {
   values: {
     teamA: string;
     teamB: string;
@@ -28,7 +32,7 @@ export interface ICalendar{
     time: string;
     dateUtc: string;
     scoreA: number;
-    scoreB:number;
+    scoreB: number;
   }[];
   week: number;
   weekCount: number;
@@ -47,7 +51,6 @@ export interface ITeamRanking {
   fair_play: string;
 }
 
-
 export interface IPlayerStats {
   firstName: string;
   lastName: string;
@@ -59,10 +62,10 @@ export interface IPlayerStats {
     weeks: string;
   };
   specialMeasure?: {
-    startDate: string,
-    endDate: string,
-    notes: string
-  }
+    startDate: string;
+    endDate: string;
+    notes: string;
+  };
 }
 export interface IPlayerRanking {
   firstName: string;
@@ -78,10 +81,10 @@ export interface ILatestMatchResult {
   date: string;
   time: string;
   location: string;
-  dateUtc: string,
-  scoreA: string,
-  scoreB: string,
-  matchCompleted: boolean,
+  dateUtc: string;
+  scoreA: string;
+  scoreB: string;
+  matchCompleted: boolean;
 }
 
 export interface INextMatchResult {

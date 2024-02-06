@@ -1,10 +1,8 @@
 import { defineStore } from "pinia";
 import { Preferences } from "@capacitor/preferences";
-import { setTheme } from "@/theme/utility";
 import { Network } from "@capacitor/network";
 
-
-import * as api from "@/api/api"
+import * as api from "@/api/api";
 import { ITournamentDetails, IPlayerStats, ITournamentEntry, ICalendar } from "@/api/interfaces";
 
 interface IState {
@@ -33,14 +31,13 @@ interface IState {
     fetchTournamentDetails: boolean;
     fetchTournamentPlayersStats: boolean;
     fetchTournamentCalender: boolean;
-  }
-
+  };
 }
 export const useStore = defineStore({
   id: "store",
   state: (): IState => ({
     httpRequestOnGoing: false,
-    appVersion: "0.0.1",
+    appVersion: "0.0.3",
     networkStatus: {
       connected: true,
       connectionType: "",
@@ -63,8 +60,7 @@ export const useStore = defineStore({
       fetchTournamentDetails: false,
       fetchTournamentPlayersStats: false,
       fetchTournamentCalender: false,
-    }
-
+    },
   }),
   getters: {
     isDark: (state) => state.preferences.isDark,
@@ -73,14 +69,11 @@ export const useStore = defineStore({
     getLatestMatchResults: (state) => state.tournamentDetails?.latestMatches || [],
     getNextMatches: (state) => state.tournamentDetails?.nextMatches || [],
     getTournamentCalendarValues: (state) => state.tournamentCalendar?.values || [],
-    getIsLoading: (state) => Object.values(state.loading).some(item => item),
+    getIsLoading: (state) => Object.values(state.loading).some((item) => item),
   },
   actions: {
     async toggleTheme(isDark: boolean) {
       this.preferences.isDark = isDark;
-      console.log("Toggle theme");
-      console.log("\tisDark", isDark);
-      await setTheme(isDark);
     },
     async fetchPreferences() {
       console.log("Fetch preferences");
@@ -123,7 +116,6 @@ export const useStore = defineStore({
     },
     async loadApp() {
       await this.fetchPreferences();
-      await setTheme(this.isDark);
       this.listenForNetworkChanges();
       await this.getNetworkStatus();
     },
@@ -155,12 +147,12 @@ export const useStore = defineStore({
     async fetchPlayers(id: string) {
       this.loading.fetchTournamentPlayersStats = true;
       const response = await api.getPlayersStats(id);
-      this.playersStats = response.data.data
+      this.playersStats = response.data.data;
       this.loading.fetchTournamentPlayersStats = false;
     },
 
     //fetch tournament calendar
-    async fetchTournamentCalendar(id: string, week?:number) {
+    async fetchTournamentCalendar(id: string, week?: number) {
       this.loading.fetchTournamentCalender = true;
       const response = await api.getTournamentCalendar(id, week);
       this.tournamentCalendar = response.data.data;

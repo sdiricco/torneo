@@ -10,33 +10,16 @@ import "./main.css";
 import "/node_modules/primeflex/primeflex.css";
 //core
 import "primevue/resources/primevue.min.css";
-import 'primeicons/primeicons.css'
+import "primeicons/primeicons.css";
+//primevue theme
+import "./assets/primevue-sass-theme-3.47/themes/lara/lara-light/blue/theme.scss";
 
-import './main.css'
+import "./main.css";
 
 /*********************************************
  * IONIC
  *********************************************/
 import { IonicVue } from "@ionic/vue";
-
-/* Core CSS required for Ionic components to work properly */
-import "@ionic/vue/css/core.css";
-
-/* Basic CSS for apps built with Ionic */
-import "@ionic/vue/css/normalize.css";
-import "@ionic/vue/css/structure.css";
-import "@ionic/vue/css/typography.css";
-
-/* Optional CSS utils that can be commented out */
-import "@ionic/vue/css/padding.css";
-import "@ionic/vue/css/float-elements.css";
-import "@ionic/vue/css/text-alignment.css";
-import "@ionic/vue/css/text-transformation.css";
-import "@ionic/vue/css/flex-utils.css";
-import "@ionic/vue/css/display.css";
-
-/* Theme variables */
-import "./theme/variables.css";
 
 /*****************************************************************************/
 /* PRIME VUE - IMPORT COMPONENTS */
@@ -68,7 +51,7 @@ import InputMask from "primevue/inputmask";
 import InputNumber from "primevue/inputnumber";
 import InputSwitch from "primevue/inputswitch";
 import InputText from "primevue/inputtext";
-import Image from 'primevue/image';
+import Image from "primevue/image";
 import Knob from "primevue/knob";
 import Menu from "primevue/menu";
 import Message from "primevue/message";
@@ -81,7 +64,7 @@ import ScrollPanel from "primevue/scrollpanel";
 import Sidebar from "primevue/sidebar";
 import Slider from "primevue/slider";
 import SelectButton from "primevue/selectbutton";
-import Skeleton from 'primevue/skeleton';
+import Skeleton from "primevue/skeleton";
 import TabMenu from "primevue/tabmenu";
 import TabPanel from "primevue/tabpanel";
 import TabView from "primevue/tabview";
@@ -90,7 +73,7 @@ import Textarea from "primevue/textarea";
 import ToggleButton from "primevue/togglebutton";
 import Toast from "primevue/toast";
 import ToastService from "primevue/toastservice";
-import Paginator from 'primevue/paginator';
+import Paginator from "primevue/paginator";
 import ProgressSpinner from "primevue/progressspinner";
 /*****************************************************************************/
 /* PRIME VUE IMPORT DIRECTIVE */
@@ -129,7 +112,25 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 /* add icons to the library */
-library.add(faUserSecret, faSatelliteDish, faMoon, faSun, faWifi, faMagnifyingGlass, faCircleXmark, faTrophy, faFutbol, faPeopleGroup, faShirt, faChevronRight, faHome, faNoteSticky, faFutbol, faCalendar, faShirt);
+library.add(
+  faUserSecret,
+  faSatelliteDish,
+  faMoon,
+  faSun,
+  faWifi,
+  faMagnifyingGlass,
+  faCircleXmark,
+  faTrophy,
+  faFutbol,
+  faPeopleGroup,
+  faShirt,
+  faChevronRight,
+  faHome,
+  faNoteSticky,
+  faFutbol,
+  faCalendar,
+  faShirt
+);
 
 const pinia = createPinia();
 
