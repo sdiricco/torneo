@@ -3,15 +3,11 @@
 </template>
 
 <script lang="ts" setup>
-import { useStore } from "@/store/main";
-import { onBeforeMount } from "vue";
 import { useRoute } from "vue-router";
 import router from "@/router";
 import DashoboardRoot from "@/components/pages/dashboard/DashoboardRoot.vue";
 
 const id = useRoute().params.id as string;
-
-const store = useStore();
 
 function goToPlayersPage() {
   router.push({ name: "PlayersStatsPage", params: { id } });
@@ -20,9 +16,4 @@ function goToPlayersPage() {
 function goToRankingPage() {
   router.push({ name: "TournamentRankingPage", params: { id } });
 }
-
-onBeforeMount(async () => {
-  await store.fecthTournamentDetails(id);
-  await store.fetchPlayers(id);
-});
 </script>

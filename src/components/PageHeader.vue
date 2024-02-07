@@ -1,5 +1,5 @@
 <template>
-  <div class="relative">
+  <div>
     <div class="grid grid-nogutter align-items-center p-2">
       <div class="col">
         <Button v-if="showBackButton" icon="pi pi-arrow-left" text rounded severity="secondary" @click="onBack" />
@@ -23,7 +23,6 @@
         <Menu ref="menu" id="overlay_menu" :model="items" :popup="true" />
       </div>
     </div>
-    <ProgressBar v-if="store.getIsLoading" mode="indeterminate" style="height: 4px" class="border-noround absolute bottom-0 w-full"></ProgressBar>
   </div>
 </template>
 

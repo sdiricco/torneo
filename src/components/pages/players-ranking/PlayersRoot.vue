@@ -1,5 +1,5 @@
 <template>
-  <DataTable scrollable scrollHeight="flex" class="w-full" :value="playersStats" dataKey="team" :loading="getIsLoading">
+  <DataTable scrollable scrollHeight="flex" class="w-full" :value="playersStats" dataKey="team">
     <Column frozen>
       <template #body="{ index }">
         {{ index + 1 }}
@@ -19,7 +19,7 @@
 import { useStore } from "@/store/main";
 import { storeToRefs } from "pinia";
 
-const { playersStats, getIsLoading } = storeToRefs(useStore());
+const { playersStats } = storeToRefs(useStore());
 </script>
 
 <style scoped></style>
