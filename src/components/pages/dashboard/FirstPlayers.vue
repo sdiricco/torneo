@@ -8,10 +8,10 @@
             <div class="font-bold">Giocatore</div>
           </div>
           <div class="col-1">
-            <div class="font-bold">Goal</div>
+            <div class="font-bold">G</div>
           </div>
         </div>
-        <div class="grid grid-nogutter pt-3" v-for="(p, idx) in playersFiltered" :key="idx">
+        <div class="grid grid-nogutter pt-3 font-bold" v-for="(p, idx) in playersFiltered" :key="idx">
           <div class="col-1">{{ idx + 1 }}</div>
           <div class="col-10">{{ `${p.firstName} ${p.lastName}` }}</div>
           <div class="col-1">{{ p.goal }}</div>
@@ -64,7 +64,7 @@ const emit = defineEmits(["goToRankingPage"]);
   left: 0;
   width: 100%;
   height: 100%;
-  background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0) 50%, rgba(255, 255, 255, 0.8) 100%);
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0) 80%, rgba(255, 255, 255, 0.8) 100%);
   z-index: 2;
   pointer-events: none;
 }
