@@ -9,9 +9,6 @@
     </div>
 
     <div class="overflow-auto">
-      <template v-if="getIsLoading">
-        <SkeletonCard v-for="i in 6" :key="i" class="mb-2" />
-      </template>
       <div
         v-ripple
         v-for="tournament in tournamentsFiltered"
@@ -39,10 +36,9 @@ import { computed, ref } from "vue";
 import { useStore } from "@/store/main";
 import { storeToRefs } from "pinia";
 import { watchDebounced } from "@vueuse/core";
-import SkeletonCard from "@/components/shared/SkeletonCard.vue";
 
 const mainStore = useStore();
-const { tournaments, getIsLoading } = storeToRefs(mainStore);
+const { tournaments } = storeToRefs(mainStore);
 const emit = defineEmits<{
   (e: "select:tournament", id: number): void;
 }>();
